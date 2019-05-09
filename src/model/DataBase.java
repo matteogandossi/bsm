@@ -12,7 +12,7 @@ public class DataBase {
 	private static String user = "root";
 	private static String password = "";
 	
-	private static Statement connect() {
+	public static Statement connect() {
 		
 		Connection connect;
 		
@@ -31,7 +31,7 @@ public class DataBase {
 		
 	}
 	
-	private static void closeConnection(Statement st) {
+	public static void closeConnection(Statement st) {
 		try {
 			
 			st.close();
@@ -43,13 +43,12 @@ public class DataBase {
 		}
 	}
 	
-	public static ResultSet selectUsers() {
+	public static ResultSet selectUsers(Statement st) {
 		
-		Statement st = connect();
 		ResultSet result = null;
 		
 		try {
-			result = st.executeQuery("SELECT * FROM user");
+			result = st.executeQuery("SELECT * FROM user INNER JOIN login ON user.email = login.email");
 			
 		} catch (SQLException e) {
 			System.out.println("Query Error!");

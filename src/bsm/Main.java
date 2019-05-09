@@ -2,6 +2,7 @@ package bsm;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import model.DataBase;
 
@@ -12,10 +13,15 @@ public class Main {
 		//hi
 		System.out.println("ciao");
 		System.out.println("ciao tutti");
-		ResultSet rs = DataBase.selectUsers();
-		rs.next();
-		System.out.println(rs.getString("firstName"));
+		
+		
+		Statement st = DataBase.connect();
+		ResultSet rs = DataBase.selectUsers(st);
+		
+		while(rs.next())
+			System.out.println(rs.getString("firstName"));
+		DataBase.closeConnection(st);
  	
-	}
+	}	
 
 }
