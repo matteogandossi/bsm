@@ -16,34 +16,42 @@ public class User {
     private String department;
     private String mobileNumber;
     private String dateOfBirth;
+    private String petName;
+    private String birthPlace;
     
-    private void setFirstName(String firstName) { this.firstName = firstName; }
-    private void setLastName(String lastName) { this.lastName = lastName; }
-    private String getName() { return firstName + " " +  lastName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+    public String getName() { return firstName + " " +  lastName; }
     
-    private void setId(String id) { this.id = id; }
-    private String getId() { return id; }
+    public void setId(String id) { this.id = id; }
+    public String getId() { return id; }
 
-    private void setRooms(List<String> rooms) { this.rooms = rooms; }
-    private List<String> getRooms() { return rooms; }
+    public void setRooms(List<String> rooms) { this.rooms = rooms; }
+    public List<String> getRooms() { return rooms; }
 
-    private void setLogIn(String logIn) { this.logIn = logIn; }
-    private String getLogIN() { return logIn; }
+    public void setLogIn(String logIn) { this.logIn = logIn; }
+    public String getLogIn() { return logIn; }
     
-    private void setEmailId(String emailId) { this.emailId = emailId; }
-    private String getEmailId() { return emailId; }
+    public void setEmailId(String emailId) { this.emailId = emailId; }
+    public String getEmailId() { return emailId; }
     
-    private void setPassword(String passwor) { this.password = password; }
-    private String getPassword() { return password; }
+    public void setPassword(String passwor) { this.password = password; }
+    public String getPassword() { return password; }
     
-    private void setDepartment(String department) { this.department = department; }
-    private String getDepartment() { return department; }
+    public void setDepartment(String department) { this.department = department; }
+    public String getDepartment() { return department; }
     
-    private void setMobileNumber(String mobileNumber) { this.mobileNumber = mobileNumber; }
-    private String getMobileNumber() { return mobileNumber; }
+    public void setMobileNumber(String mobileNumber) { this.mobileNumber = mobileNumber; }
+    public String getMobileNumber() { return mobileNumber; }
     
-    private void setDateOfBirth(String dateOfBirth) { this.dateOfBirth = dateOfBirth; }
-    private String getDateOfBirth() { return dateOfBirth; }
+    public void setDateOfBirth(String dateOfBirth) { this.dateOfBirth = dateOfBirth; }
+    public String getDateOfBirth() { return dateOfBirth; }
+    
+    public void setPetName(String passwor) { this.petName = petName; }
+    public String getPetName() { return petName; }
+    
+    public void setBirthPlace(String birthPlace) { this.birthPlace = birthPlace; }
+    public String getBirthPlace() { return birthPlace; }
     
     
     private void addRooms()
