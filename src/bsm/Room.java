@@ -16,7 +16,7 @@ public void setName(String name) { this.name = name; }
 public String getName() { return name; }
 
 public void setMaxSize(int maxSize) { this.maxSize = maxSize; }
-public int MaxSize() { return maxSize; }
+public int getMaxSize() { return maxSize; }
 
 public void setPassword(String password) { this.password = password; }
 
