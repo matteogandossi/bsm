@@ -18,6 +18,8 @@ public class User {
     private String dateOfBirth;
     private String petName;
     private String birthPlace;
+    private String securityQuestion1;
+    private String securityQuestion2;
     
     public void setFirstName(String firstName) { this.firstName = firstName; }
     public void setLastName(String lastName) { this.lastName = lastName; }
@@ -35,7 +37,7 @@ public class User {
     public void setEmailId(String emailId) { this.emailId = emailId; }
     public String getEmailId() { return emailId; }
     
-    public void setPassword(String passwor) { this.password = password; }
+    public void setPassword(String password) { this.password = password; }
     public String getPassword() { return password; }
     
     public void setDepartment(String department) { this.department = department; }
@@ -47,12 +49,17 @@ public class User {
     public void setDateOfBirth(String dateOfBirth) { this.dateOfBirth = dateOfBirth; }
     public String getDateOfBirth() { return dateOfBirth; }
     
-    public void setPetName(String passwor) { this.petName = petName; }
+    public void setPetName(String petName) { this.petName = petName; }
     public String getPetName() { return petName; }
     
     public void setBirthPlace(String birthPlace) { this.birthPlace = birthPlace; }
     public String getBirthPlace() { return birthPlace; }
     
+    public void setSecurityQuestion1(String securityQuestion1) { this.securityQuestion1 = securityQuestion1; }
+    public String getSecurityQuestion1() { return securityQuestion1; }
+    
+    public void setSecurityQuestion2(String securityQuestion2) { this.securityQuestion2 = securityQuestion2; }
+    public String getSecurityQuestion2() { return securityQuestion2; }
     
     private void addRooms()
     {
