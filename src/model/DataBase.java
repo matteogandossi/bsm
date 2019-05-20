@@ -5,10 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
-import javax.jws.soap.SOAPBinding.Use;
-
+import bsm.Room;
 import bsm.User;
 
 public class DataBase {
@@ -102,19 +100,68 @@ public class DataBase {
 	 *	INSERT Methods 
 	 * 
 	 */	
-	public static boolean insertNewUser(Statement st, User u) {
+	public static boolean insertNewUser(Statement st, User u, String password) {
 		
-		return true;
+		int result = 0;
+		
+		//login table
+		String loginQuery = "INSERT INTO login(email, securityQuestion1, securityQuestion2, password) "
+						+ 	"VALUES('" + u.getEmailId() + "','" + u.getPetName() + "','"+ u.getBirthPlace() + "',"
+						+	((password == null)?"null":"md5('" + password + "')") + ")";
+		
+		try {
+			st.executeUpdate(loginQuery);
+		} catch (SQLException e) {
+			System.out.println("Can't add new login tuple." + loginQuery);
+			return false;
+		}
+		
+		//user table
+		String userQuery = "INSERT INTO user(firstName, secondName, email, designation, department, mobileNumber, doB) "
+						+ 	"VALUES('" + u.getFirstName() + "','" + u.getLastName() + "','" + u.getEmailId() + "','" 
+							+ u.getDesignation() + "','" + u.getDepartment() + "','" + u.getMobileNumber() + "','" + u.getDateOfBirth() + "')";
+		
+		try {
+			result = st.executeUpdate(userQuery);
+		} catch (SQLException e) {
+			System.out.println("Problem with the query " + userQuery);
+		}		
+		
+		return (result > 0);
 	}
 	
-	public static boolean insertNewRoom(Statement st, User u) {
+	public static boolean insertNewRoom(Statement st, Room	r, String password) {
 		
-		return true;
+		int result = 0;
+		
+		String query = "INSERT INTO room(name, maxSize, password) "
+					+ "VALUES ('" + r.getName() + "'," + r.getMaxSize() + ","
+					+ ((password == null)?"null":"md5('" + password + "')") + ")";
+		
+		try {
+			result = st.executeUpdate(query);
+		} catch (SQLException e) {
+		
+		}
+		
+		return (result > 0);
 	}
 	
-	public static boolean insertPermissions(Statement st, ArrayList<String> permissionList) {
+	public static boolean insertPermissions(Statement st, String idUser, String idRoom) {
 		
-		return true;
+		int result = 0;
+		
+		String query =	"INSERT INTO permission(IDUser, IDRoom) "
+					+	"VALUES ('" + idUser  + "','" + idRoom +"')";
+		
+		try {
+			result = st.executeUpdate(query);
+		} catch (SQLException e) {
+		
+		}
+		
+		return (result > 0);
+	
 	}
 	
 	/**
@@ -151,12 +198,52 @@ public class DataBase {
 		int result = 0;
 		
 		try {
-			result = st.executeUpdate("DELETE FROM permission WHERE IDUser = " + idUser + " AND IDRoom = " + idRoom);
+			
+			result = st.executeUpdate("DELETE FROM permission WHERE IDUser = '" + idUser + "' AND IDRoom = '" + idRoom + "'");
+			
 		} catch (SQLException e) {
 			System.out.println("Query -DeletePermission- Error!");
 		}
 		
 		return (result > 0);
 	}
+	
+	/**
+	 * UPDATE Method
+	 */
+	public static boolean updateUserPassword(Statement st, String email, String password) {
+		
+		int result = 0;
+		
+		try {
+			
+			result = st.executeUpdate("UPDATE login SET password = "
+									+ ((password == null)?"null":"md5('" + password + "')") + 
+									" WHERE email = '" + email +"'");
+			
+		} catch (SQLException e) {
+			System.out.println("Query -UpdateUserPassword- Error!");
+		}
+		
+		return (result > 0);
+	}
+	
+	public static boolean updateRoomPassword(Statement st, String idRoom, String password) {
+		
+		int result = 0;
+		
+		try {
+			
+			result = st.executeUpdate("UPDATE room SET password =" + 
+									((password == null)?"null":"md5('" + password + "')") + 
+									" WHERE ID = '" + idRoom +"'");
+			
+		} catch (SQLException e) {
+			System.out.println("Query -UpdateUserPassword- Error!");
+		}
+		
+		return (result > 0);
+	}
+
 
 }

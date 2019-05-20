@@ -19,8 +19,8 @@ public class User {
     private String dateOfBirth;
     private String petName;
     private String birthPlace;
-    private String securityQuestion1;
-    private String securityQuestion2;
+    //private String securityQuestion1;
+    //private String securityQuestion2;
     
     public void setFirstName(String firstName) { this.firstName = firstName; }
     public void setLastName(String lastName) { this.lastName = lastName; }
@@ -61,12 +61,12 @@ public class User {
     public void setBirthPlace(String birthPlace) { this.birthPlace = birthPlace; }
     public String getBirthPlace() { return birthPlace; }
     
-    public void setSecurityQuestion1(String securityQuestion1) { this.securityQuestion1 = securityQuestion1; }
+   /* public void setSecurityQuestion1(String securityQuestion1) { this.securityQuestion1 = securityQuestion1; }
     public String getSecurityQuestion1() { return securityQuestion1; }
     
     public void setSecurityQuestion2(String securityQuestion2) { this.securityQuestion2 = securityQuestion2; }
     public String getSecurityQuestion2() { return securityQuestion2; }
-    
+    */
     private void addRooms()
     {
     	Scanner scanner = new Scanner(System.in);
