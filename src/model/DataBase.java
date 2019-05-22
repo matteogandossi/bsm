@@ -87,13 +87,47 @@ public class DataBase {
 		ResultSet result = null;
 		
 		try {
-			result = st.executeQuery("SELECT room.ID FROM room INNER JOIN permission ON room.ID = permission.IDRoom WHERE permission.IDUser = " + idUser);
+			result = st.executeQuery("SELECT room.ID AS roomID FROM room INNER JOIN permission ON room.ID = permission.IDRoom WHERE permission.IDUser = " + idUser);
 			
 		} catch (SQLException e) {
 			System.out.println("Query -SelectPermission- Error!");
 		}
 		
 		return result;
+	}
+	
+	private static String selectIDbyemail(Statement st, String email) {
+		
+		ResultSet result = null;
+		
+		try {
+			result = st.executeQuery("SELECT ID FROM user WHERE email = '" + email + "'");
+			if(result.next())
+				return result.getString("ID");
+			
+		} catch (SQLException e) {
+			System.out.println("Query -SelectIdUser- Error!");
+		}
+		
+		return null;		
+		
+	}
+	
+	private static String selectIDbyRoomName(Statement st, String roomName) {
+		
+		ResultSet result = null;
+		
+		try {
+			result = st.executeQuery("SELECT ID FROM room WHERE name = '" + roomName + "'");
+			if(result.next())
+				return result.getString("ID");
+			
+		} catch (SQLException e) {
+			System.out.println("Query -SelectIdRoom- Error!");
+		}
+		
+		return null;		
+		
 	}
 	
 	/**
@@ -122,7 +156,10 @@ public class DataBase {
 							+ u.getDesignation() + "','" + u.getDepartment() + "','" + u.getMobileNumber() + "','" + u.getDateOfBirth() + "')";
 		
 		try {
+			
 			result = st.executeUpdate(userQuery);
+			u.setId(selectIDbyemail(st, u.getEmailId()));
+			
 		} catch (SQLException e) {
 			System.out.println("Problem with the query " + userQuery);
 		}		
@@ -139,7 +176,10 @@ public class DataBase {
 					+ ((password == null)?"null":"md5('" + password + "')") + ")";
 		
 		try {
+			
 			result = st.executeUpdate(query);
+			r.setId(selectIDbyRoomName(st, r.getName()));
+			
 		} catch (SQLException e) {
 		
 		}
