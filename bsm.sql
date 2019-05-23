@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 08, 2019 alle 15:18
+-- Creato il: Mag 23, 2019 alle 15:48
 -- Versione del server: 10.1.38-MariaDB
 -- Versione PHP: 7.3.3
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `bsm`
 --
+CREATE DATABASE IF NOT EXISTS `bsm` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+USE `bsm`;
 
 -- --------------------------------------------------------
 
@@ -32,8 +34,7 @@ CREATE TABLE `login` (
   `email` varchar(100) COLLATE utf8_bin NOT NULL,
   `password` varchar(100) COLLATE utf8_bin NOT NULL,
   `securityQuestion1` varchar(100) COLLATE utf8_bin NOT NULL,
-  `securityQuestion2` varchar(100) COLLATE utf8_bin NOT NULL,
-  `confirmed` tinyint(1) NOT NULL DEFAULT '0'
+  `securityQuestion2` varchar(100) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -92,13 +93,14 @@ ALTER TABLE `login`
 --
 ALTER TABLE `permission`
   ADD PRIMARY KEY (`IDUser`,`IDRoom`),
-  ADD KEY `IDRoom` (`IDRoom`);
+  ADD KEY `permission_ibfk_2` (`IDRoom`);
 
 --
 -- Indici per le tabelle `room`
 --
 ALTER TABLE `room`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indici per le tabelle `user`
@@ -131,14 +133,14 @@ ALTER TABLE `user`
 -- Limiti per la tabella `permission`
 --
 ALTER TABLE `permission`
-  ADD CONSTRAINT `permission_ibfk_1` FOREIGN KEY (`IDUser`) REFERENCES `user` (`ID`),
-  ADD CONSTRAINT `permission_ibfk_2` FOREIGN KEY (`IDRoom`) REFERENCES `room` (`ID`);
+  ADD CONSTRAINT `permission_ibfk_1` FOREIGN KEY (`IDUser`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `permission_ibfk_2` FOREIGN KEY (`IDRoom`) REFERENCES `room` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`email`) REFERENCES `login` (`email`);
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`email`) REFERENCES `login` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
