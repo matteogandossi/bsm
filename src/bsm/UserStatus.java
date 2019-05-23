@@ -1,7 +1,5 @@
 package bsm;
 
-import com.sun.xml.internal.bind.v2.runtime.RuntimeUtil.ToStringAdapter;
-
 public class UserStatus {
 	
 	User user;
@@ -48,7 +46,7 @@ public class UserStatus {
 		str.append( (logged)? "" : "not " );
 		str.append("logged in");
 		if(r!=null)
-			str.append(" and he is currently in room " + r.getName());
+			str.append(" and he is currently in room " + r.getRoomName());
 		str.append(".");
 		
 		return str.toString();
