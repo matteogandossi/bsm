@@ -68,6 +68,20 @@ public class DataBase {
 		return result;
 	}
 	
+public static ResultSet showUsers(Statement st) {
+		
+		ResultSet result = null;
+		
+		try {
+			result = st.executeQuery("SELECT * FROM user");
+			
+		} catch (SQLException e) {
+			System.out.println("Query -SelectUsers- Error!");
+		}
+		
+		return result;
+	}
+	
 	public static ResultSet selectRooms(Statement st) {
 		
 		ResultSet result = null;
@@ -106,7 +120,7 @@ public class DataBase {
 		
 		//login table
 		String loginQuery = "INSERT INTO login(email, securityQuestion1, securityQuestion2, password) "
-						+ 	"VALUES('" + u.getEmailId() + "','" + u.getPetName() + "','"+ u.getBirthPlace() + "',"
+						+ 	"VALUES('" + u.getEmailId() + "','" + u.getSecurityQuestion1() + "','"+ u.getSecurityQuestion2() + "',"
 						+	((password == null)?"null":"md5('" + password + "')") + ")";
 		
 		try {
@@ -130,12 +144,12 @@ public class DataBase {
 		return (result > 0);
 	}
 	
-	public static boolean insertNewRoom(Statement st, Room	r, String password) {
+	public static boolean insertNewRoom(Statement st, Room r, String password) {
 		
 		int result = 0;
 		
 		String query = "INSERT INTO room(name, maxSize, password) "
-					+ "VALUES ('" + r.getName() + "'," + r.getMaxSize() + ","
+					+ "VALUES ('" + r.getRoomName() + "'," + r.getMaxSize() + ","
 					+ ((password == null)?"null":"md5('" + password + "')") + ")";
 		
 		try {
@@ -172,7 +186,7 @@ public class DataBase {
 		int result = 0;
 		
 		try {
-			result = st.executeUpdate("DELETE FROM user WHERE ID = " + id);
+			result = st.executeUpdate("DELETE FROM user WHERE ID = '" + id + "'");
 		} catch (SQLException e) {
 			System.out.println("Query -DeleteUser- Error!");
 		}
@@ -185,7 +199,7 @@ public class DataBase {
 		int result = 0;
 		
 		try {
-			result = st.executeUpdate("DELETE FROM room WHERE ID = " + id);
+			result = st.executeUpdate("DELETE FROM room WHERE ID = '" + id + "'");
 		} catch (SQLException e) {
 			System.out.println("Query -DeleteRoom- Error!");
 		}
@@ -240,6 +254,98 @@ public class DataBase {
 			
 		} catch (SQLException e) {
 			System.out.println("Query -UpdateUserPassword- Error!");
+		}
+		
+		return (result > 0);
+	}
+
+	
+   public static ResultSet userExist(Statement st, String permissionUserId) {
+		
+	   ResultSet result = null;
+		
+		try {
+			
+			result = st.executeQuery("SELECT * FROM user Where ID = '" + permissionUserId + "'");
+			
+		} catch (SQLException e) {
+			System.out.println("Query -PermissionUser- Error!");
+		}
+		
+		return result;
+	}
+   
+   public static ResultSet roomExist(Statement st, String roomId) {
+		
+	   ResultSet result = null;
+		
+		try {
+			
+			result = st.executeQuery("SELECT * FROM room Where ID = '" + roomId + "'");
+			
+		} catch (SQLException e) {
+			System.out.println("Query -RoomExist- Error!");
+		}
+		
+		return result;
+	}
+   
+
+   public static ResultSet duplicatePermission(Statement st, String permissionUserId, String permissionRoomId) {
+		
+		ResultSet result = null;
+		
+		try {
+			result = st.executeQuery("SELECT * FROM permission Where IDUser = '" + permissionUserId + "' AND IDRoom = '" + permissionRoomId + "'");
+			
+		} catch (SQLException e) {
+			System.out.println("Query -DuplicatePermission- Error!");
+		}
+		
+		return result;
+	}
+   
+   
+   public static boolean deleteUserPermission(Statement st, String idUser) {
+		
+		int result = 0;
+		
+		try {
+			
+			result = st.executeUpdate("DELETE FROM permission WHERE IDUser = '" + idUser + "'");
+			
+		} catch (SQLException e) {
+			System.out.println("Query -DeleteUserFromPermissionTable- Error!");
+		}
+		
+		return (result > 0);
+	}
+   
+   
+   public static boolean deleteRoomPermission(Statement st, String idRoom) {
+		
+		int result = 0;
+		
+		try {
+			
+			result = st.executeUpdate("DELETE FROM permission WHERE IDRoom = '" + idRoom + "'");
+			
+		} catch (SQLException e) {
+			System.out.println("Query -DeleteRoomFromPermissionTable- Error!");
+		}
+		
+		return (result > 0);
+	}
+   
+   
+   public static boolean deleteLogin(Statement st, String email) {
+		
+		int result = 0;
+		
+		try {
+			result = st.executeUpdate("DELETE FROM login WHERE email = '" + email + "'");
+		} catch (SQLException e) {
+			System.out.println("Query -Deletelogin- Error!");
 		}
 		
 		return (result > 0);
