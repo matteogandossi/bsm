@@ -192,7 +192,7 @@ public static ResultSet showUsers(Statement st) {
 		try {
 			
 			result = st.executeUpdate(query);
-			r.setId(selectIDbyRoomName(st, r.getName()));
+			r.setId(selectIDbyRoomName(st, r.getRoomName()));
 			
 		} catch (SQLException e) {
 		

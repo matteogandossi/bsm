@@ -49,7 +49,7 @@ public class MatteoMain {
 		DataBase.closeConnection(st);
 		
 		Room r = new Room();
-		r.setName("hall");
+		r.setRoomName("hall");
 		
 		status.get("2").login();
 		status.get("2").enterRoom(r);
