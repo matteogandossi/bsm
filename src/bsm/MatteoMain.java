@@ -5,11 +5,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
+import controller.Status;
 import model.DataBase;
 
 public class MatteoMain {
 
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws SQLException, UserNotFoundException {
 		Statement st = DataBase.connect();
 		/*Room r = new Room();
 		r.setMaxSize(5);
@@ -43,7 +44,7 @@ public class MatteoMain {
 			u.setMobileNumber(rs.getString("mobileNumber"));
 			u.setDateOfBirth(rs.getString("doB"));
 			System.out.println(u.getId());
-			status.add(u);
+			status.addNewUser(u);
 		}
 		
 		DataBase.closeConnection(st);
@@ -51,8 +52,8 @@ public class MatteoMain {
 		Room r = new Room();
 		r.setRoomName("hall");
 		
-		status.get("2").login();
-		status.get("2").enterRoom(r);
+		status.getUserStatus("2").login();
+		status.getUserStatus("2").enterRoom(r);
 		
 		status.print();
 		

@@ -15,6 +15,8 @@ public class DataBase {
 	private static String user = "root";
 	private static String password = "";
 	
+	private DataBase() {}
+	
 	/**
 	 *	Connection Methods 
 	 * 

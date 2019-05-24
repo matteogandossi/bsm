@@ -1,4 +1,7 @@
-package bsm;
+package controller;
+
+import bsm.Room;
+import bsm.User;
 
 public class UserStatus {
 	
