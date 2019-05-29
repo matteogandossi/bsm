@@ -70,7 +70,7 @@ public class DataBase {
 		return result;
 	}
 	
-public static ResultSet showUsers(Statement st) {
+	public static ResultSet showUsers(Statement st) {
 		
 		ResultSet result = null;
 		
@@ -140,6 +140,24 @@ public static ResultSet showUsers(Statement st) {
 			
 		} catch (SQLException e) {
 			System.out.println("Query -SelectIdRoom- Error!");
+		}
+		
+		return null;		
+		
+	}
+	
+	
+	public static String getHashedPassword(Statement st, String password) {
+		
+		ResultSet result = null;
+		
+		try {
+			result = st.executeQuery("SELECT md5('" + password + "') AS hashedPassword");
+			if(result.next())
+				return result.getString("hashedPassword");
+			
+		} catch (SQLException e) {
+			System.out.println("Query -hash password- Error!");
 		}
 		
 		return null;		

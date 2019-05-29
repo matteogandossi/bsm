@@ -9,7 +9,7 @@ public class UserStatus {
 	private Room r;
 	private boolean logged;
 	
-	UserStatus(User u){
+	public UserStatus(User u){
 		this.user = u;
 		r = null;
 		logged = false;

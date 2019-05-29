@@ -27,33 +27,7 @@ public class MatteoMain {
 		u.setDateOfBirth("2000-11-21");
 		boolean rs = DataBase.insertNewUser(st, u, "ciao");*/
 		
-		ResultSet rs = DataBase.selectUsers(st);
-		
 		Status status = new Status();
-		
-		while(rs.next()) {
-			
-			User u = new User();
-			
-			u.setId(rs.getString("ID"));
-			u.setFirstName(rs.getString("firstName"));
-			u.setLastName(rs.getString("secondName"));
-			u.setEmailId(rs.getString("email"));
-			u.setDesignation(rs.getString("designation"));
-			u.setDepartment(rs.getString("department"));
-			u.setMobileNumber(rs.getString("mobileNumber"));
-			u.setDateOfBirth(rs.getString("doB"));
-			System.out.println(u.getId());
-			status.addNewUser(u);
-		}
-		
-		DataBase.closeConnection(st);
-		
-		Room r = new Room();
-		r.setRoomName("hall");
-		
-		status.getUserStatus("2").login();
-		status.getUserStatus("2").enterRoom(r);
 		
 		status.print();
 		

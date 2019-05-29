@@ -6,6 +6,7 @@ import bsm.Room;
 import bsm.RoomNotFoundException;
 import bsm.User;
 import bsm.UserNotFoundException;
+import model.Model;
 
 public class Status {
 	
@@ -14,7 +15,17 @@ public class Status {
 	
 	public Status(){
 		userStatusList = new ArrayList<UserStatus>();
-		roomList = new ArrayList<Room>();
+		fillUserStatusList();
+		roomList = Model.loadRooms();
+	}
+	
+	private void fillUserStatusList() {
+		
+		ArrayList<User> userList = Model.loadUsers();
+		
+		for(int i = 0; i < userList.size(); i++)
+			userStatusList.add(new UserStatus(userList.get(i)));			
+
 	}
 	
 	/*** 				USER 				***/
@@ -35,7 +46,7 @@ public class Status {
 		return userStatusList.get(findUser(userId));
 	}
 	
-	public boolean addNewUser(User newUser) {
+	public boolean addNewUser(User newUser, String password) {
 		
 		try {
 			
@@ -44,10 +55,19 @@ public class Status {
 		} catch (UserNotFoundException e) {
 			//if there is no user with that ID I can add them
 			userStatusList.add(new UserStatus(newUser));
-			return true;
+			return Model.insertNewUser(newUser, password);
 		}
 		
 		return false;
+	}
+	
+	public boolean updateUserPassword(String idUser, String newPassword) throws UserNotFoundException {
+		
+		User currentUser = userStatusList.get(findUser(idUser)).user;
+		currentUser.setPassword(Model.getHashedPassword(newPassword));
+		
+		return  Model.updateUserPassword(currentUser.getEmailId(), newPassword);
+		
 	}
 	
 	public int userCount() {
@@ -57,6 +77,7 @@ public class Status {
 	public void remove(String userId) throws UserNotFoundException {	
 
 		userStatusList.remove(findUser(userId));
+		Model.deleteUser(userId);
 	}
 	
 	/*** 				ROOM				***/
@@ -77,7 +98,7 @@ public class Status {
 		return roomList.get(findRoom(roomId));
 	}
 	
-	public boolean addNewRoom(Room newRoom) {
+	public boolean addNewRoom(Room newRoom, String password) {
 		
 		try {
 			
@@ -86,7 +107,7 @@ public class Status {
 		} catch (RoomNotFoundException e) {
 			//if there is no user with that ID I can add them
 			roomList.add(newRoom);
-			return true;
+			return Model.insertNewRoom(newRoom, password);
 		}
 		
 		return false;
@@ -96,9 +117,19 @@ public class Status {
 		return roomList.size();
 	}
 	
+	public boolean updateRoomPassword(String idRoom, String newPassword) throws RoomNotFoundException {
+		
+		Room currentRoom = roomList.get(findRoom(idRoom));
+		currentRoom.setRoomPassword(Model.getHashedPassword(newPassword));
+		return Model.updateRoomPassword(idRoom, newPassword);
+		
+	}
+	
 	public void removeRoom(String roomId) throws RoomNotFoundException {	
-
+		
 		roomList.remove(findRoom(roomId));
+		Model.deleteRoom(roomId);
+		
 	}
 	
 	
