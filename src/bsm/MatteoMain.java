@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
+import controller.Server;
 import controller.Status;
 import model.DataBase;
 
@@ -27,10 +28,9 @@ public class MatteoMain {
 		u.setDateOfBirth("2000-11-21");
 		boolean rs = DataBase.insertNewUser(st, u, "ciao");*/
 		
-		Status status = new Status();
 		
-		status.print();
-		
+		Server server = new Server();
+		server.print();
 		
 		
 

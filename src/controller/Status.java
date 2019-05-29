@@ -132,6 +132,46 @@ public class Status {
 		
 	}
 	
+	/***				MIXED				***/	
+	
+	public ArrayList<User> getAllUsers(){
+		
+		ArrayList<User> list = new ArrayList<User>();
+		
+		for(int i = 0; i < userStatusList.size(); i++)
+			list.add(userStatusList.get(i).user);
+		
+		return list;
+	}
+	
+	public ArrayList<User> getLoggedOrNotUsers(boolean logged){
+		
+		ArrayList<User> list = new ArrayList<User>();
+		
+		for(int i = 0; i < userStatusList.size(); i++)
+			if(logged == userStatusList.get(i).isLogged())
+				list.add(userStatusList.get(i).user);		
+		
+		return list;
+		
+	}
+	
+	public ArrayList<RoomStatus> getAllRoomsStatus(){
+		
+		ArrayList<RoomStatus> list = new ArrayList<RoomStatus>();
+		
+		for(int i = 0; i < roomList.size(); i++) {
+			
+			list.add(new RoomStatus(roomList.get(i)));
+			
+			for(int j = 0; j < userStatusList.size(); j++)				
+				if(userStatusList.get(j).getCurrentRoom() == roomList.get(i))
+					list.get(i).add(userStatusList.get(j).user);			
+		}
+		
+		return list;
+	}
+	
 	
 	public void print() {
 		
