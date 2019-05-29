@@ -62,7 +62,7 @@ public void deleteRoom() throws SQLException {
 	ResultSet rs = DataBase.selectRooms(st);
 	while(rs.next())
     System.out.println(rs.getString("ID") + ".  " + rs.getString("name")); 
-	System.out.println("Please enter your room id delete room profile ");
+	System.out.println("Please enter room id to delete room profile ");
     answer = scanner.nextLine();
     ResultSet rs1 = DataBase.roomExist(st,answer);
 	if(rs1.next())
@@ -70,6 +70,27 @@ public void deleteRoom() throws SQLException {
     DataBase.deleteRoom(st,answer);
     DataBase.deleteRoomPermission(st,answer);
     System.out.println("Deleted the profile succesfully ");
+	}
+	else { System.out.println("Room Id is doesn't exist");}
+}
+
+public void updateRoomPassword() throws SQLException { 
+	
+	Room room= new Room();
+	String answer;
+	Statement st = DataBase.connect();
+	ResultSet rs = DataBase.selectRooms(st);
+	while(rs.next())
+    System.out.println(rs.getString("ID") + ".  " + rs.getString("name")); 
+	System.out.println("Please enter room id to update room password ");
+    answer = scanner.nextLine();
+    ResultSet rs1 = DataBase.roomExist(st,answer);
+	if(rs1.next())
+	{
+	String newPassword;
+	newPassword = scanner.nextLine();
+    DataBase.updateRoomPassword(st,answer,newPassword);
+    System.out.println("Passeord changed succesfully ");
 	}
 	else { System.out.println("Room Id is doesn't exist");}
 }

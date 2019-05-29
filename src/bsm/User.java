@@ -477,7 +477,8 @@ public static void main(String[] args) throws SQLException {
     System.out.println("2. Delete User");
     System.out.println("3. Insert New Room");
     System.out.println("4. Delete Room");
-    System.out.println("5. Add/Remove permission");
+    System.out.println("5. Update Room Password");
+    System.out.println("6. Add/Remove permission");
     choosedOption = scanner.nextInt();
     switch (choosedOption)
     {
@@ -494,6 +495,9 @@ public static void main(String[] args) throws SQLException {
             room.deleteRoom();
             break;
         case 5:
+        	room.updateRoomPassword();
+            break;
+        case 6:
         	user.addremovePermission();
             break;
         default:
