@@ -112,6 +112,21 @@ public class DataBase {
 		return result;
 	}
 	
+	
+public static ResultSet showPermission(Statement st) {
+		
+		ResultSet result = null;
+		
+		try {
+			result = st.executeQuery("SELECT * FROM permission");
+			
+		} catch (SQLException e) {
+			System.out.println("Query -SelectPermission- Error!");
+		}
+		
+		return result;
+	}
+
 	private static String selectIDbyemail(Statement st, String email) {
 		
 		ResultSet result = null;
@@ -221,12 +236,12 @@ public class DataBase {
 		return (result > 0);
 	}
 	
-	public static boolean insertPermissions(Statement st, String idUser, String idRoom) {
+	public static boolean insertPermissions(Statement st, User u) {
 		
 		int result = 0;
 		
 		String query =	"INSERT INTO permission(IDUser, IDRoom) "
-					+	"VALUES ('" + idUser  + "','" + idRoom +"')";
+					+	"VALUES ('" + u.getPermissionUserId() + "','" + u.getChoosenRoom() +"')";
 		
 		try {
 			result = st.executeUpdate(query);

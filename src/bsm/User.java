@@ -227,6 +227,8 @@ public class User {
     private String dateOfBirth;
     private String securityQuestion1;
     private String securityQuestion2;
+    private String permissionUserId;
+	private String choosenRoom;
 
   //  private String roomName;
   //  private int maxSize;
@@ -271,6 +273,12 @@ public class User {
     
     public void setSecurityQuestion2(String securityQuestion2) { this.securityQuestion2 = securityQuestion2; }
     public String getSecurityQuestion2() { return securityQuestion2; }
+    
+    public void setPermissionUserId(String permissionUserId) { this.permissionUserId = permissionUserId; }
+    public String getPermissionUserId() { return permissionUserId; }
+    
+    public void setChoosenRoom(String choosenRoom) { this.choosenRoom = choosenRoom; }
+    public String getChoosenRoom() { return choosenRoom; }
     
    /* public void setRoomName(String roomName) { this.roomName = roomName; }
     public String getRoomtName() { return roomName; }
@@ -385,8 +393,7 @@ public boolean checkRoomPassword(String input) {
 public void addremovePermission() throws SQLException { 
 	User user = new User();
 	String permissionAnswer;
-	String permissionUserId;
-	String choosenRoom;
+	
 
     System.out.println("Do you want to add or remove permission");
     permissionAnswer = scanner.nextLine();
@@ -411,7 +418,9 @@ public void addremovePermission() throws SQLException {
             	}
         		else
         		{
-        			DataBase.insertPermissions(st1,permissionUserId,choosenRoom) ;
+        			user.setPermissionUserId(permissionUserId);
+        			user.setChoosenRoom(choosenRoom);
+        			DataBase.insertPermissions(st1,user) ;
         			System.out.println("Added permission succesfully");
         		}
         		}

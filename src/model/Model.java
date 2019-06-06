@@ -35,6 +35,18 @@ public class Model {
 		
 	}
 	
+public static boolean addPermission(User newPermission) {
+		
+		Statement st = DataBase.connect();
+		
+		boolean result = DataBase.insertPermissions(st, newPermission);
+		
+		DataBase.closeConnection(st);
+		
+		return result;
+		
+	}
+	
 	public static ArrayList<User> loadUsers(){
 		
 		ArrayList<User> list = new ArrayList<User>();
@@ -106,6 +118,33 @@ public class Model {
 		
 	}
 	
+public static ArrayList<User> loadPermissions(){
+		
+		ArrayList<User> list = new ArrayList<User>();
+		
+		Statement st = DataBase.connect();
+		
+		ResultSet resSet = DataBase.showPermission(st);
+		
+		try {
+			while(resSet.next()) {
+				
+				User newPermission = new User();
+				
+				newPermission.setPermissionUserId(resSet.getString("IDUser"));
+				newPermission.setChoosenRoom(resSet.getString("IDRoom"));	
+				list.add(newPermission);			
+			}
+		} catch (SQLException e) {
+			System.out.println("Problem reading permissions!");
+		}
+		
+		DataBase.closeConnection(st);
+		
+		return list;		
+		
+	}
+
 	public static void deleteRoom(String idRoom) {
 		
 		Statement st = DataBase.connect();
@@ -126,6 +165,16 @@ public class Model {
 		
 	}
 	
+public static void deletePermission(String idUser, String idRoom) {
+		
+		Statement st = DataBase.connect();
+		
+		DataBase.deletePermission(st, idUser, idRoom);
+		
+		DataBase.closeConnection(st);
+		
+	}
+
 	public static String getHashedPassword(String password) {
 		
 		Statement st = DataBase.connect();
