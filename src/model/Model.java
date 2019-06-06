@@ -35,7 +35,7 @@ public class Model {
 		
 	}
 	
-public static boolean addPermission(User newPermission) {
+public static boolean addPermission(Permission newPermission) {
 		
 		Statement st = DataBase.connect();
 		
@@ -118,9 +118,9 @@ public static boolean addPermission(User newPermission) {
 		
 	}
 	
-public static ArrayList<User> loadPermissions(){
+public static ArrayList<Permission> loadPermissions(){
 		
-		ArrayList<User> list = new ArrayList<User>();
+		ArrayList<Permission> list = new ArrayList<Permission>();
 		
 		Statement st = DataBase.connect();
 		
@@ -129,10 +129,7 @@ public static ArrayList<User> loadPermissions(){
 		try {
 			while(resSet.next()) {
 				
-				User newPermission = new User();
-				
-				newPermission.setPermissionUserId(resSet.getString("IDUser"));
-				newPermission.setChoosenRoom(resSet.getString("IDRoom"));	
+				Permission newPermission = new Permission(resSet.getString("IDUser"),resSet.getString("IDRoom"));	
 				list.add(newPermission);			
 			}
 		} catch (SQLException e) {
