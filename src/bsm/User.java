@@ -217,7 +217,7 @@ public class User {
 	private String firstName;
     private String lastName;
     private String id;
-    private String[] rooms;
+   // private String[] rooms;
     private String logIn;
     private String emailId;
     private String password;
@@ -227,8 +227,8 @@ public class User {
     private String dateOfBirth;
     private String securityQuestion1;
     private String securityQuestion2;
-    private String permissionUserId;
-	private String choosenRoom;
+  //  private String permissionUserId;
+//	private String choosenRoom;
 
   //  private String roomName;
   //  private int maxSize;
@@ -244,8 +244,8 @@ public class User {
     public void setId(String id) { this.id = id; }
     public String getId() { return id; }
 
-    public void setRooms(String[] rooms) { this.rooms = rooms; }
-    public String[] getRooms() { return rooms; }
+  //  public void setRooms(String[] rooms) { this.rooms = rooms; }
+  //  public String[] getRooms() { return rooms; }
 
     public void setLogIn(String logIn) { this.logIn = logIn; }
     public String getLogIn() { return logIn; }
@@ -274,13 +274,13 @@ public class User {
     public void setSecurityQuestion2(String securityQuestion2) { this.securityQuestion2 = securityQuestion2; }
     public String getSecurityQuestion2() { return securityQuestion2; }
     
-    public void setPermissionUserId(String permissionUserId) { this.permissionUserId = permissionUserId; }
+    /*public void setPermissionUserId(String permissionUserId) { this.permissionUserId = permissionUserId; }
     public String getPermissionUserId() { return permissionUserId; }
     
     public void setChoosenRoom(String choosenRoom) { this.choosenRoom = choosenRoom; }
     public String getChoosenRoom() { return choosenRoom; }
     
-   /* public void setRoomName(String roomName) { this.roomName = roomName; }
+    public void setRoomName(String roomName) { this.roomName = roomName; }
     public String getRoomtName() { return roomName; }
     
     public void setMaxSize(int maxSize) { this.maxSize = maxSize; }
@@ -386,7 +386,7 @@ public boolean checkRoomPassword(String input) {
         return true;
     } 
     return false;
-} */
+} 
 
 
 
@@ -418,7 +418,7 @@ public void addremovePermission() throws SQLException {
             	}
         		else
         		{
-        			user.setPermissionUserId(permissionUserId);
+        		    user.setPermissionUserId(permissionUserId);
         			user.setChoosenRoom(choosenRoom);
         			DataBase.insertPermissions(st1,user) ;
         			System.out.println("Added permission succesfully");
@@ -454,7 +454,7 @@ public void addremovePermission() throws SQLException {
         	}
         	else{System.out.println("User Id is doesn't exist");}
         }
-}
+}*/
 
 
 public void allStatus() { 
@@ -506,9 +506,9 @@ public static void main(String[] args) throws SQLException {
         case 5:
         	room.updateRoomPassword();
             break;
-        case 6:
-        	user.addremovePermission();
-            break;
+        //case 6:
+       // 	user.addremovePermission();
+        //    break;
         default:
             System.out.println("You gave the wrong input");
             break;

@@ -35,7 +35,11 @@ public class Model {
 		
 	}
 	
+<<<<<<< HEAD
 	public static boolean addPermission(User newPermission) {
+=======
+public static boolean addPermission(Permission newPermission) {
+>>>>>>> ec89724df7b7630f1b6f670edb90576a8abb75f9
 		
 		Statement st = DataBase.connect();
 		
@@ -118,9 +122,9 @@ public class Model {
 		
 	}
 	
-public static ArrayList<User> loadPermissions(){
+public static ArrayList<Permission> loadPermissions(){
 		
-		ArrayList<User> list = new ArrayList<User>();
+		ArrayList<Permission> list = new ArrayList<Permission>();
 		
 		Statement st = DataBase.connect();
 		
@@ -129,10 +133,7 @@ public static ArrayList<User> loadPermissions(){
 		try {
 			while(resSet.next()) {
 				
-				User newPermission = new User();
-				
-				newPermission.setPermissionUserId(resSet.getString("IDUser"));
-				newPermission.setChoosenRoom(resSet.getString("IDRoom"));	
+				Permission newPermission = new Permission(resSet.getString("IDUser"),resSet.getString("IDRoom"));	
 				list.add(newPermission);			
 			}
 		} catch (SQLException e) {

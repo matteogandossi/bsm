@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import bsm.Permission;
 import bsm.Room;
 import bsm.User;
 
@@ -236,12 +237,12 @@ public static ResultSet showPermission(Statement st) {
 		return (result > 0);
 	}
 	
-	public static boolean insertPermissions(Statement st, User u) {
+	public static boolean insertPermissions(Statement st, Permission p) {
 		
 		int result = 0;
 		
 		String query =	"INSERT INTO permission(IDUser, IDRoom) "
-					+	"VALUES ('" + u.getPermissionUserId() + "','" + u.getChoosenRoom() +"')";
+					+	"VALUES ('" + p.getIdUser() + "','" + p.getIdRoom() +"')";
 		
 		try {
 			result = st.executeUpdate(query);
