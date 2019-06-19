@@ -3,8 +3,6 @@ package controller;
 import java.util.ArrayList;
 
 import bsm.PermissionNotFoundException;
-import bsm.Room;
-import bsm.RoomNotFoundException;
 import bsm.User;
 import model.Model;
 

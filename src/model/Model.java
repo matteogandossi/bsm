@@ -35,7 +35,7 @@ public class Model {
 		
 	}
 	
-public static boolean addPermission(User newPermission) {
+	public static boolean addPermission(User newPermission) {
 		
 		Statement st = DataBase.connect();
 		

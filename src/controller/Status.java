@@ -13,7 +13,7 @@ public class Status {
 	private ArrayList<UserStatus> userStatusList;
 	private ArrayList<Room> roomList;
 	
-	public Status(){
+	public Status(){ 
 		userStatusList = new ArrayList<UserStatus>();
 		fillUserStatusList();
 		roomList = Model.loadRooms();
