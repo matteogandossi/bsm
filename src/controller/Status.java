@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
+import bsm.Permission;
 import bsm.Room;
 import bsm.RoomNotFoundException;
 import bsm.User;
@@ -12,11 +13,14 @@ public class Status {
 	
 	private ArrayList<UserStatus> userStatusList;
 	private ArrayList<Room> roomList;
-	
+	private Permissions permissionList;
+
+	public Permissions permissions;
 	public Status(){ 
 		userStatusList = new ArrayList<UserStatus>();
 		fillUserStatusList();
 		roomList = Model.loadRooms();
+		permissionList = new Permissions();
 	}
 	
 	private void fillUserStatusList() {
@@ -181,6 +185,35 @@ public class Status {
 	}
 	
 	//function to get status TODO
+	
+	public SynchStatus getSynchStaus(String ID)	
+	{
+		ArrayList<Permission> list = permissions.findUserPermission(ID);
+		ArrayList<Room> listroom = new ArrayList<Room>();
+		UserStatus userstatus = null;
+		try {
+			userstatus = getUserStatus(ID);
+		} catch (UserNotFoundException e) {
+			return null;
+		}
 		
+		for(int i = 0; i < list.size(); i++) {
+			for(int j = 0; j < roomList.size(); j++) {
+				if(list.get(i).getIdRoom().equals(roomList.get(j).getId()))
+					listroom.add(roomList.get(j));
+			}
+		}
 		
+		ArrayList<Integer> presentList = new ArrayList<Integer>();
+		int k = 0;
+		for(int i = 0; i < listroom.size(); i++) {
+			k=0;
+			for(int j = 0; j < userStatusList.size(); j++) {
+				if(listroom.get(i).equals(userStatusList.get(j).getCurrentRoom()))
+					k++;
+			}
+			presentList.add(k);
+		}
+		return new SynchStatus(userstatus, listroom, presentList);
+	}
 }

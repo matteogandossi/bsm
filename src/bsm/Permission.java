@@ -1,4 +1,7 @@
 package bsm;
+
+import java.util.ArrayList;
+
 public class Permission{
 	
 	private String idUser;
@@ -14,5 +17,8 @@ public class Permission{
 	public String getIdUser() { return idUser; }
     
     public String getIdRoom() { return idRoom; }
+
+
+	
     
 }

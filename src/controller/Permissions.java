@@ -33,6 +33,18 @@ public class Permissions{
 	return permissionList.get(findPermission(idUser, idRoom));
 	}
 	
+	public ArrayList<Permission> findUserPermission(String idUser)
+	{
+		ArrayList<Permission> list = new ArrayList<Permission>();
+		
+		for(int i = 0; i < permissionList.size(); i++)
+			if(permissionList.get(i).getIdUser().equals(idUser)) 
+				list.add(permissionList.get(i));
+		
+		return list;
+	}
+
+	
 	public boolean addNewPermission(Permission permission) {
 		
 		try {
@@ -54,5 +66,9 @@ public class Permissions{
 		Model.deletePermission(userId, roomId);
 		
 	}
+
+
+	
+	
 
 }
