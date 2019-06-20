@@ -34,12 +34,8 @@ public class Model {
 		return result;
 		
 	}
-	
-<<<<<<< HEAD
-	public static boolean addPermission(User newPermission) {
-=======
-public static boolean addPermission(Permission newPermission) {
->>>>>>> ec89724df7b7630f1b6f670edb90576a8abb75f9
+
+	public static boolean addPermission(Permission newPermission) {
 		
 		Statement st = DataBase.connect();
 		
