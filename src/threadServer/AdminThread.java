@@ -3,6 +3,7 @@ package threadServer;
 import java.util.Scanner;
 
 import controller.Status;
+import view.AdminView;
 
 public class AdminThread extends Thread {
 	
@@ -26,11 +27,18 @@ public class AdminThread extends Thread {
 		
 		do {
 			
-			choice = scanner.nextInt();
-			
+			choice = AdminView.showMainMenu();					
 			
 			switch(choice) {
-				//...
+				
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				case 4:
+					break;
 			}
 			
 		} while(choice != 0);

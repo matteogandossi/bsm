@@ -29,8 +29,9 @@ public class MatteoMain {
 		boolean rs = DataBase.insertNewUser(st, u, "ciao");*/
 		
 		
-		Server server = new Server();
-		server.print();
+		//Server server = new Server();
+		//server.print();
+		
 		
 		
 
