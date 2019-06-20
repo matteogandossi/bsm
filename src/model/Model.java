@@ -118,7 +118,7 @@ public class Model {
 		
 	}
 	
-public static ArrayList<Permission> loadPermissions(){
+	public static ArrayList<Permission> loadPermissions(){
 		
 		ArrayList<Permission> list = new ArrayList<Permission>();
 		
@@ -162,7 +162,7 @@ public static ArrayList<Permission> loadPermissions(){
 		
 	}
 	
-public static void deletePermission(String idUser, String idRoom) {
+	public static void deletePermission(String idUser, String idRoom) {
 		
 		Statement st = DataBase.connect();
 		
