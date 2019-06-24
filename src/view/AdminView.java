@@ -1,14 +1,14 @@
 package view;
 
-import java.util.Scanner;
+import bsm.Room;
+import bsm.User;
+import controller.Status;
 
-public class AdminView extends BasicView{
-	
-	private static Scanner scanner = new Scanner(System.in);
+public class AdminView{
 	
 	private AdminView() {}
 		
-	public static int showMainMenu() {
+	public static int mainMenu() {
 		System.out.println("Select the operation... ");
 		System.out.println("1) See Status of the building");
 		System.out.println("2) Add new User/Room/Permission");
@@ -18,18 +18,47 @@ public class AdminView extends BasicView{
 		return BasicView.askForChoice();
 	}
 	
-	public static int showAddMenu() {
+	public static void addMenu(Status status) {
+		
+		int choice;
+		boolean outcome;
 		
 		System.out.println("Select what entity do you want to add...");
 		System.out.println("1) User");
 		System.out.println("2) Room");
 		System.out.println("3) Permission");
 		BasicView.backOrQuit("Back");
-		return BasicView.askForChoice();
+		
+		choice = BasicView.askForChoice();
+		
+		switch (choice) {
+		
+			case 1:
+				User user = AddView.newUser();
+				outcome = status.addNewUser(user, user.getPassword());
+				BasicView.confirmOrAbort(outcome);
+				break;
+			
+			case 2:
+				Room room = AddView.newRoom();
+				outcome = status.addNewRoom(room, room.getRoomPassword());
+				BasicView.confirmOrAbort(outcome);
+				break;
+			
+			case 3:
+				String idUser = SelectView.selectUser(status.getAllUsers());
+				String idRoom = SelectView.selectRoom(status.getAllRoom());
+				//ADD NEW PERMISSION
+				break;
+
+		default:
+			break;
+		}
+		
 		
 	}
 	
-	public static int showRemoveMenu() {
+	public static int removeMenu() {
 		
 		System.out.println("Select what entity do you want to remove...");
 		System.out.println("1) User");
@@ -39,7 +68,7 @@ public class AdminView extends BasicView{
 		return BasicView.askForChoice();
 	}
 	
-	public static int showShowMenu() {
+	public static int showMenu() {
 		
 		System.out.println("Select what entity do you want to see the details...");
 		System.out.println("1) User");

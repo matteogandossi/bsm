@@ -4,9 +4,6 @@ import java.util.ArrayList;
 
 import bsm.Permission;
 import bsm.PermissionNotFoundException;
-import bsm.Room;
-import bsm.RoomNotFoundException;
-import bsm.User;
 import model.Model;
 
 public class Permissions{
@@ -16,7 +13,11 @@ public class Permissions{
 		permissionList = Model.loadPermissions();
 	}
 	
-	private int findPermission(String idUser,String idRoom) throws PermissionNotFoundException {
+	public ArrayList<Permission> getList(){
+		return permissionList;
+	}
+	
+	private int findPermission(String idUser, String idRoom) throws PermissionNotFoundException {
 		
 		for(int i = 0; i < permissionList.size(); i++)
 			if(permissionList.get(i).getIdUser().equals(idUser) && permissionList.get(i).getIdRoom().equals(idRoom)) 
@@ -28,7 +29,7 @@ public class Permissions{
 	}
 	
 
-	public Permission getPermission(String idUser,String idRoom) throws PermissionNotFoundException {
+	public Permission getPermission(String idUser, String idRoom) throws PermissionNotFoundException {
 	
 	return permissionList.get(findPermission(idUser, idRoom));
 	}

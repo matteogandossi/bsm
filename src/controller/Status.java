@@ -15,7 +15,6 @@ public class Status {
 	private ArrayList<Room> roomList;
 	private Permissions permissionList;
 
-	public Permissions permissions;
 	public Status(){ 
 		userStatusList = new ArrayList<UserStatus>();
 		fillUserStatusList();
@@ -35,6 +34,9 @@ public class Status {
 	/*** 				USER 				***/
 	
 	private int findUser(String userId) throws UserNotFoundException {
+		
+		if(userId == null)
+			throw new UserNotFoundException();
 		
 		for(int i = 0; i < userStatusList.size(); i++)
 			if(userStatusList.get(i).user.getId().equals(userId)) 
@@ -87,6 +89,9 @@ public class Status {
 	/*** 				ROOM				***/
 	
 	private int findRoom(String roomId) throws RoomNotFoundException {
+		
+		if(roomId == null)
+			throw new RoomNotFoundException();
 		
 		for(int i = 0; i < roomList.size(); i++)
 			if(roomList.get(i).getId().equals(roomId)) 
@@ -148,6 +153,10 @@ public class Status {
 		return list;
 	}
 	
+	public ArrayList<Room> getAllRoom(){
+		return roomList;
+	}
+	
 	public ArrayList<User> getLoggedOrNotUsers(boolean logged){
 		
 		ArrayList<User> list = new ArrayList<User>();
@@ -188,7 +197,7 @@ public class Status {
 	
 	public SynchStatus getSynchStaus(String ID)	
 	{
-		ArrayList<Permission> list = permissions.findUserPermission(ID);
+		ArrayList<Permission> list = permissionList.findUserPermission(ID);
 		ArrayList<Room> listroom = new ArrayList<Room>();
 		UserStatus userstatus = null;
 		try {
@@ -215,5 +224,19 @@ public class Status {
 			presentList.add(k);
 		}
 		return new SynchStatus(userstatus, listroom, presentList);
+	}
+
+	public void showAllPermissions() {
+		
+		ArrayList<Permission> list = permissionList.getList();
+		
+		for(int i = 0; i < list.size(); i++) {
+			try {
+				System.out.println( userStatusList.get(findUser(list.get(i).getIdUser())).user.getName() +
+						" - " + roomList.get(findRoom(list.get(i).getIdRoom())).getRoomName());
+			} catch (Exception e) {
+			}
+		}
+		
 	}
 }

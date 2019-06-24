@@ -26,6 +26,7 @@ public void setMaxSize(int maxSize) { this.maxSize = maxSize; }
 public int getMaxSize() { return maxSize; }
 
 public void setRoomPassword(String roomPassword) { this.roomPassword = roomPassword; }
+public String getRoomPassword() { return roomPassword; }
 
 public boolean checkPassword(String input) { 
 

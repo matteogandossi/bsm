@@ -27,7 +27,7 @@ public class AdminThread extends Thread {
 		
 		do {
 			
-			choice = AdminView.showMainMenu();					
+			choice = AdminView.mainMenu();					
 			
 			switch(choice) {
 				
