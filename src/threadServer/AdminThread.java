@@ -48,6 +48,8 @@ public class AdminThread extends Thread {
 		} while(choice != 0);
 		
 		stop = true;
+		
+		System.out.println("Goodbye.");
 	}
 
 }

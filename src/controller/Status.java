@@ -61,8 +61,10 @@ public class Status {
 			
 		} catch (UserNotFoundException e) {
 			//if there is no user with that ID I can add them
-			userStatusList.add(new UserStatus(newUser));
-			return Model.insertNewUser(newUser, password);
+			if(Model.insertNewUser(newUser, password)) {
+				userStatusList.add(new UserStatus(newUser));
+				return true;
+			}
 		}
 		
 		return false;
@@ -85,6 +87,19 @@ public class Status {
 
 		userStatusList.remove(findUser(userId));
 		Model.deleteUser(userId);
+	}
+	
+	public ArrayList<Room> permittedRooms(User u) {
+		
+		ArrayList<String> idrooms =  permissionList.getAccessableRooms(u);
+		ArrayList<Room> allRooms = new ArrayList<Room>();
+		
+		for(int i = 0; i < roomList.size(); i++)
+			for(int j = 0; j < idrooms.size(); j++)
+				if(idrooms.get(j).equals(roomList.get(i).getId()))
+					allRooms.add(roomList.get(i));
+		return allRooms;
+		
 	}
 	
 	/*** 				ROOM				***/
@@ -116,8 +131,10 @@ public class Status {
 			
 		} catch (RoomNotFoundException e) {
 			//if there is no user with that ID I can add them
-			roomList.add(newRoom);
-			return Model.insertNewRoom(newRoom, password);
+			if(Model.insertNewRoom(newRoom, password)) {
+				roomList.add(newRoom);
+				return true;
+			}
 		}
 		
 		return false;
@@ -139,6 +156,19 @@ public class Status {
 		
 		roomList.remove(findRoom(roomId));
 		Model.deleteRoom(roomId);
+		
+	}
+	
+	public ArrayList<User> permittedUsers(Room r) {
+		
+		ArrayList<String> idUsers =  permissionList.getAllowedUsers(r);
+		ArrayList<User> allUsers = new ArrayList<User>();
+		
+		for(int i = 0; i < userStatusList.size(); i++)
+			for(int j = 0; j < idUsers.size(); j++)
+				if(userStatusList.get(i).user.getId().equals(idUsers.get(j)))
+					allUsers.add(userStatusList.get(i).user);
+		return allUsers;
 		
 	}
 	

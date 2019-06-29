@@ -11,23 +11,32 @@ public class ShowView {
 	
 	private ShowView() {}
 	
-	public static void showUser(User user) {
+	public static void showUser(User user, ArrayList<Room> permittedRooms) {
 		
 		System.out.println("Showing user with ID " + user.getId() + ".");
 		System.out.println("Name: " + user.getName());
+		System.out.println("DoB: "+ user.getDateOfBirth());
+		System.out.println("E-mail:  " + user.getEmailId());
 		System.out.println("Designation: " + user.getDesignation());
 		System.out.println("Department: " + user.getDepartment());
-		BasicView.pressEnterToContinue();
+	
+		System.out.println("The user can enter the following rooms: ");
+		for(Room pr : permittedRooms)
+			System.out.println(pr.getRoomName());
+		System.out.println("END.");
 		
 	}
 	
-	public static void showRoom(Room room) {
+	public static void showRoom(Room room, ArrayList<User> permittedUsers) {
 		
 		System.out.println("Showing room with ID " + room.getId() + ".");
 		System.out.println("Name: " + room.getRoomName());
 		System.out.println("Maximum capacity: " + room.getMaxSize());
 		System.out.println("Has a password? " + ((room.getRoomPassword() == null)?"YES":"NO"));
-		BasicView.pressEnterToContinue();
+		System.out.println("The room can be entered by the following users: ");
+		for(User pu: permittedUsers)
+			System.out.println(pu.getName());
+		System.out.println("END.");
 		
 	}
 	
@@ -35,7 +44,6 @@ public class ShowView {
 		
 		System.out.println("Showing all permissions.");
 		status.showAllPermissions();
-		BasicView.pressEnterToContinue();
 		
 	}
 	

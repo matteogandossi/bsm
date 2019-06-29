@@ -136,8 +136,8 @@ public class Admin{
 				String idUser = SelectView.selectUser(status.getAllUsers());
 				
 				try {
-					
-					ShowView.showUser(status.getUserStatus(idUser).user);
+					User u = status.getUserStatus(idUser).user;
+					ShowView.showUser(u, status.permittedRooms(u));
 					
 				} catch (UserNotFoundException e) {
 					BasicView.cantCompleteOperation("The selected user is not found");
@@ -149,13 +149,17 @@ public class Admin{
 				String idRoom = SelectView.selectRoom(status.getAllRoomsStatus());
 				
 				try {
-					
-					ShowView.showRoom(status.getRoom(idRoom));
+					Room r = status.getRoom(idRoom);
+					ShowView.showRoom(r, status.permittedUsers(r));
 					
 				} catch (RoomNotFoundException e) {
 					BasicView.cantCompleteOperation("The selected room is not found");
 				}
 				
+				break;
+			
+			case 3:
+				ShowView.showAllPermissions(status);
 				break;
 	
 			default:

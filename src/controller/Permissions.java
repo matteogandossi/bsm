@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import bsm.Permission;
 import bsm.PermissionNotFoundException;
+import bsm.Room;
+import bsm.User;
 import model.Model;
 
 public class Permissions{
@@ -56,8 +58,11 @@ public class Permissions{
 			
 		} catch (PermissionNotFoundException e) {
 			//if there is no user with that room permission
-			permissionList.add(permission);
-			return Model.insertPermission(permission);
+			
+			if( Model.insertPermission(permission)) {
+				permissionList.add(permission);
+				return true;
+			}
 		}
 		
 		return false;
@@ -68,6 +73,28 @@ public class Permissions{
 		permissionList.remove(findPermission(userId, roomId));
 		Model.deletePermission(userId, roomId);
 		
+	}
+
+	public ArrayList<String> getAccessableRooms(User u) {
+		
+		ArrayList<String> list = new ArrayList<String>();
+		
+		for(int i = 0; i < permissionList.size(); i++)
+			if(permissionList.get(i).getIdUser().equals(u.getId()))
+				list.add(permissionList.get(i).getIdRoom());
+		
+		return list;
+	}
+	
+	public ArrayList<String> getAllowedUsers(Room r) {
+		
+		ArrayList<String> list = new ArrayList<String>();
+		
+		for(int i = 0; i < permissionList.size(); i++)
+			if(permissionList.get(i).getIdRoom().equals(r.getId()))
+				list.add(permissionList.get(i).getIdUser());
+		
+		return list;
 	}
 
 

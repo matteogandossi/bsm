@@ -8,7 +8,7 @@ public class MenuView {
 		System.out.println("1) See Status of the building");
 		System.out.println("2) Add new User/Room/Permission");
 		System.out.println("3) Remove User/Room/Permission");
-		System.out.println("4) Show User/Room");
+		System.out.println("4) Show User/Room/Permissions");
 		BasicView.backOrQuit("Quit");
 		return BasicView.askForChoice();
 		
@@ -41,6 +41,7 @@ public class MenuView {
 		System.out.println("Select what entity do you want to see the details...");
 		System.out.println("1) User");
 		System.out.println("2) Room");
+		System.out.println("3) All Permissions");
 		BasicView.backOrQuit("Back");
 		return BasicView.askForChoice();
 		

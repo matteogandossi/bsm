@@ -1,9 +1,13 @@
 package view;
 
+import java.util.Scanner;
+
 import bsm.Room;
 import bsm.User;
 
-public class AddView extends BasicView {
+public class AddView{
+	
+	private static Scanner scanner = new Scanner(System.in);
 	
 	private AddView() {}
 	
@@ -13,34 +17,34 @@ public class AddView extends BasicView {
 		
 		System.out.println("Add new user.");
 		System.out.print("Please enter the user's first name: ");
-	    newUser.setFirstName(scanner.nextLine());
+	    newUser.setFirstName(scanner.next());
 	    
 	    System.out.print("Please enter the user's last name: ");
-	    newUser.setLastName(scanner.nextLine());
+	    newUser.setLastName(scanner.next());
 	    
 		System.out.print("Please enter the user's e-mail: ");
-		newUser.setEmailId(scanner.nextLine());
+		newUser.setEmailId(scanner.next());
 		
 		System.out.print("Please enter the user's designation: ");
-		newUser.setDesignation(scanner.nextLine());
+		newUser.setDesignation(scanner.next());
 		
 		System.out.print("Please enter the user's department: ");
-		newUser.setDepartment(scanner.nextLine());
+		newUser.setDepartment(scanner.next());
 		
 		System.out.print("Please enter the user's mobile number: ");
-		newUser.setMobileNumber(scanner.nextLine());
+		newUser.setMobileNumber(scanner.next());
 		
 		System.out.print("Please enter the user's date of birth (YYYY-MM-DD): ");
-		newUser.setDateOfBirth(scanner.nextLine());
+		newUser.setDateOfBirth(scanner.next());
 		
 		System.out.print("Please enter the user's password: ");
-		newUser.setPassword(scanner.nextLine());
+		newUser.setPassword(scanner.next());
 		
 		System.out.print("Please enter the user's first pet's name: ");
-		newUser.setSecurityQuestion1(scanner.nextLine());
+		newUser.setSecurityQuestion1(scanner.next());
 		
 		System.out.print("Please enter the user's birth place: ");
-		newUser.setSecurityQuestion2(scanner.nextLine());
+		newUser.setSecurityQuestion2(scanner.next());
 		
 		return newUser;
 		
@@ -52,7 +56,7 @@ public class AddView extends BasicView {
 		
 		System.out.println("Add new room.");
 		System.out.print("Please enter the room's name: ");
-		newRoom.setRoomName(scanner.nextLine());
+		newRoom.setRoomName(scanner.next());
 		
 		System.out.print("Please enter the room's capacity: ");
 		newRoom.setMaxSize(scanner.nextInt());
@@ -63,7 +67,7 @@ public class AddView extends BasicView {
 		
 		if(choiche == 1) {
 			System.out.print("Insert room's password: ");
-			newRoom.setRoomPassword(scanner.nextLine());
+			newRoom.setRoomPassword(scanner.next());
 		}
 		
 		return newRoom;	

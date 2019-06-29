@@ -15,7 +15,7 @@ public class BasicView {
 	public static String askForId() {
 		
 		System.out.print("Id: ");
-		return scanner.nextLine();
+		return scanner.next();
 	}
 	
 	public static void backOrQuit(String str) {
@@ -24,12 +24,7 @@ public class BasicView {
 		System.out.println("0) " + str);
 		System.out.println();
 	}
-	
-	public static void pressEnterToContinue() {
-		
-		System.out.print("Press ENTER to continue...");
-		scanner.next();
-	}
+
 	
 	public static void confirmOrAbort(boolean outcome) {
 		if(outcome)
