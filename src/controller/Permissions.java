@@ -19,6 +19,9 @@ public class Permissions{
 	
 	private int findPermission(String idUser, String idRoom) throws PermissionNotFoundException {
 		
+		if(idUser == null || idRoom == null)
+			throw new PermissionNotFoundException();
+		
 		for(int i = 0; i < permissionList.size(); i++)
 			if(permissionList.get(i).getIdUser().equals(idUser) && permissionList.get(i).getIdRoom().equals(idRoom)) 
 				return i;
@@ -26,12 +29,11 @@ public class Permissions{
 		//if I cannot find it
 		throw new PermissionNotFoundException();
 				
-	}
-	
+	}	
 
 	public Permission getPermission(String idUser, String idRoom) throws PermissionNotFoundException {
 	
-	return permissionList.get(findPermission(idUser, idRoom));
+		return permissionList.get(findPermission(idUser, idRoom));
 	}
 	
 	public ArrayList<Permission> findUserPermission(String idUser)
@@ -50,12 +52,12 @@ public class Permissions{
 		
 		try {
 			
-			findPermission(permission.getIdUser(),permission.getIdRoom());
+			findPermission(permission.getIdUser(), permission.getIdRoom());
 			
 		} catch (PermissionNotFoundException e) {
 			//if there is no user with that room permission
 			permissionList.add(permission);
-			return Model.addPermission(permission);
+			return Model.insertPermission(permission);
 		}
 		
 		return false;

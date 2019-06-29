@@ -2,42 +2,46 @@ package threadServer;
 
 import java.util.Scanner;
 
+import controller.Admin;
 import controller.Status;
-import view.AdminView;
+import view.MenuView;
 
 public class AdminThread extends Thread {
 	
-	private Status status;
 	private boolean stop;
-	
-	private Scanner scanner;
+	private Admin admin;
 	
 	
 	public AdminThread(Status status, boolean stop) {
-		this.status = status;
 		this.stop = stop;
-		
-		scanner = new Scanner(System.in);
+		admin = new Admin(status);
 	}
 	
 	public void run() {
 		
-		int choice;
+		int choice, internalChoice;
 		
 		
 		do {
 			
-			choice = AdminView.mainMenu();					
+			choice = MenuView.mainMenu();					
 			
 			switch(choice) {
 				
 				case 1:
+					admin.serverStatus();
 					break;
 				case 2:
+					internalChoice = MenuView.addMenu();
+					admin.add(internalChoice);
 					break;
 				case 3:
+					internalChoice = MenuView.removeMenu();
+					admin.remove(internalChoice);
 					break;
 				case 4:
+					internalChoice = MenuView.showMenu();
+					admin.show(internalChoice);
 					break;
 			}
 			

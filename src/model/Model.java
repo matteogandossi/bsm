@@ -35,7 +35,7 @@ public class Model {
 		
 	}
 
-	public static boolean addPermission(Permission newPermission) {
+	public static boolean insertPermission(Permission newPermission) {
 		
 		Statement st = DataBase.connect();
 		
@@ -72,7 +72,6 @@ public class Model {
 				newUser.setPassword(resSet.getString("password"));
 				newUser.setSecurityQuestion1(resSet.getString("securityQuestion1"));
 				newUser.setSecurityQuestion2(resSet.getString("securityQuestion2"));
-				//// permission here...
 				
 				list.add(newUser);
 				

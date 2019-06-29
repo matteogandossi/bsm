@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import bsm.Room;
 import bsm.User;
+import controller.RoomStatus;
 
 public class SelectView{
 	
@@ -22,13 +23,14 @@ public class SelectView{
 		
 	}
 	
-	public static String selectRoom(ArrayList<Room> roomList) {
+	public static String selectRoom(ArrayList<RoomStatus> roomStatusList) {
 		
 		System.out.println("Select Room.");
 		
-		for(int i = 0; i < roomList.size(); i++) 
-			System.out.println(roomList.get(i).getId() + ") "
-					+ roomList.get(i).getRoomName());
+		for(int i = 0; i < roomStatusList.size(); i++) 
+			System.out.println(roomStatusList.get(i).getRoom().getId() + ") "
+					+ roomStatusList.get(i).getRoom().getRoomName() + 
+					"(" + roomStatusList.get(i).peopleInside() + "/" + roomStatusList.get(i).getRoom().getMaxSize() + ")");
 			
 		return BasicView.askForId();		
 		

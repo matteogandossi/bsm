@@ -37,5 +37,10 @@ public class BasicView {
 		else
 			System.out.println("Operation NOT completed.");
 	}
+	
+	public static void cantCompleteOperation(String why) {
+		System.out.println("Sorry! I can't complete this operation.");
+		System.out.println("Reason: " + why + ".");
+	}
 
 }

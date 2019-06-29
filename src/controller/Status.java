@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 
 import bsm.Permission;
+import bsm.PermissionNotFoundException;
 import bsm.Room;
 import bsm.RoomNotFoundException;
 import bsm.User;
@@ -80,7 +81,7 @@ public class Status {
 		return userStatusList.size();
 	}
 	
-	public void remove(String userId) throws UserNotFoundException {	
+	public void removeUser(String userId) throws UserNotFoundException {	
 
 		userStatusList.remove(findUser(userId));
 		Model.deleteUser(userId);
@@ -141,6 +142,30 @@ public class Status {
 		
 	}
 	
+	/***				PERMISSIONS 		***/
+	
+	public void showAllPermissions() {
+		
+		ArrayList<Permission> list = permissionList.getList();
+		
+		for(int i = 0; i < list.size(); i++) {
+			try {
+				System.out.println( userStatusList.get(findUser(list.get(i).getIdUser())).user.getName() +
+						" - " + roomList.get(findRoom(list.get(i).getIdRoom())).getRoomName());
+			} catch (Exception e) {
+			}
+		}
+		
+	}
+	
+	public boolean addNewPermission(String idUser, String idRoom) {
+		return permissionList.addNewPermission(new Permission(idUser, idRoom));
+	}
+	
+	public void removePermission(String idUser, String idRoom) throws PermissionNotFoundException {
+		permissionList.removePermission(idUser, idRoom);
+	}
+	
 	/***				MIXED				***/	
 	
 	public ArrayList<User> getAllUsers(){
@@ -185,6 +210,17 @@ public class Status {
 		return list;
 	}
 	
+	public RoomStatus getRoomStatus(String idRoom) throws RoomNotFoundException {
+		
+		RoomStatus rs = new RoomStatus(roomList.get(findRoom(idRoom)));
+		
+		for(int i = 0; i < userStatusList.size(); i++)
+			if(userStatusList.get(i).getCurrentRoom() == rs.getRoom())
+				rs.add(userStatusList.get(i).user);
+		
+		return rs;
+	}
+	
 	
 	public void print() {
 		
@@ -226,17 +262,4 @@ public class Status {
 		return new SynchStatus(userstatus, listroom, presentList);
 	}
 
-	public void showAllPermissions() {
-		
-		ArrayList<Permission> list = permissionList.getList();
-		
-		for(int i = 0; i < list.size(); i++) {
-			try {
-				System.out.println( userStatusList.get(findUser(list.get(i).getIdUser())).user.getName() +
-						" - " + roomList.get(findRoom(list.get(i).getIdRoom())).getRoomName());
-			} catch (Exception e) {
-			}
-		}
-		
-	}
 }
