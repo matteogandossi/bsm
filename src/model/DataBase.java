@@ -34,7 +34,6 @@ public class DataBase {
 		} catch (SQLException e) {
 			
 			System.out.println("Connection Error!");
-			e.printStackTrace();
 			System.exit(0);
 			return null;
 		}

@@ -1,29 +1,24 @@
 package controller;
 import java.util.ArrayList;
-import bsm.Room;
+import bsm.RoomCount;
 
 public class SynchStatus {
-	private UserStatus userStatus;
-	private ArrayList<Room> roomList;
-	private ArrayList<Integer> presentList;
 	
-	public SynchStatus(UserStatus userStatus,ArrayList<Room> roomList,ArrayList<Integer> presentList)
+	private UserStatus userStatus;
+	private ArrayList<RoomCount> roomCountList;
+	
+	public SynchStatus(UserStatus userStatus,ArrayList<RoomCount> roomList)
 	{
 		this.userStatus = userStatus;
-		this.roomList = roomList;
-		this.presentList = presentList;
+		this.roomCountList = roomList;
 	}
 
 	public UserStatus getUserStatus() {
 		return userStatus;
 	}
 
-	public ArrayList<Room> getRoomList() {
-		return roomList;
-	}
-
-	public ArrayList<Integer> getPresentList() {
-		return presentList;
+	public ArrayList<RoomCount> getRoomList() {
+		return roomCountList;
 	}
 
 

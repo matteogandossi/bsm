@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import bsm.Permission;
 import bsm.PermissionNotFoundException;
@@ -95,6 +96,33 @@ public class Permissions{
 				list.add(permissionList.get(i).getIdUser());
 		
 		return list;
+	}
+
+	public void removeAllPermissionsOfUser(String userId) {
+
+		Iterator<Permission> it = permissionList.iterator();
+		Permission current;
+		
+		while(it.hasNext()) {
+			current = it.next();
+			if(current.getIdUser().equals(userId))
+				it.remove();
+		}
+		
+	}
+
+	public void removeAllPermissionsOfRoom(String roomId) {
+
+		Iterator<Permission> it = permissionList.iterator();
+		Permission current;
+		
+		while(it.hasNext()) {
+			current = it.next();
+			if(current.getIdRoom().equals(roomId))
+				it.remove();
+		}
+			
+		
 	}
 
 

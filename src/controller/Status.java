@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import bsm.Permission;
 import bsm.PermissionNotFoundException;
 import bsm.Room;
+import bsm.RoomCount;
 import bsm.RoomNotFoundException;
 import bsm.User;
 import bsm.UserNotFoundException;
@@ -86,6 +87,7 @@ public class Status {
 	public void removeUser(String userId) throws UserNotFoundException {	
 
 		userStatusList.remove(findUser(userId));
+		permissionList.removeAllPermissionsOfUser(userId);
 		Model.deleteUser(userId);
 	}
 	
@@ -155,6 +157,7 @@ public class Status {
 	public void removeRoom(String roomId) throws RoomNotFoundException {	
 		
 		roomList.remove(findRoom(roomId));
+		permissionList.removeAllPermissionsOfRoom(roomId);
 		Model.deleteRoom(roomId);
 		
 	}
@@ -259,37 +262,41 @@ public class Status {
 		
 	}
 	
-	//function to get status TODO
-	
-	public SynchStatus getSynchStaus(String ID)	
+	public SynchStatus getSynchStaus(String idUser)	
 	{
-		ArrayList<Permission> list = permissionList.findUserPermission(ID);
-		ArrayList<Room> listroom = new ArrayList<Room>();
+		ArrayList<Permission> list = permissionList.findUserPermission(idUser);
+		
+		ArrayList<RoomCount> listRoomCount = new ArrayList<RoomCount>();
 		UserStatus userstatus = null;
+		
 		try {
-			userstatus = getUserStatus(ID);
+			userstatus = getUserStatus(idUser);
+			
 		} catch (UserNotFoundException e) {
+			
 			return null;
 		}
 		
-		for(int i = 0; i < list.size(); i++) {
-			for(int j = 0; j < roomList.size(); j++) {
-				if(list.get(i).getIdRoom().equals(roomList.get(j).getId()))
-					listroom.add(roomList.get(j));
-			}
-		}
+		for(Permission p : list) 
+			for(Room r : roomList) 
+				if(p.getIdRoom().equals(r.getId()))
+					listRoomCount.add( new RoomCount(r));
+			
+		int k;
 		
-		ArrayList<Integer> presentList = new ArrayList<Integer>();
-		int k = 0;
-		for(int i = 0; i < listroom.size(); i++) {
-			k=0;
-			for(int j = 0; j < userStatusList.size(); j++) {
-				if(listroom.get(i).equals(userStatusList.get(j).getCurrentRoom()))
+		for(RoomCount rc : listRoomCount) {
+			
+			k = 0;
+			//count all user in this room
+			for(UserStatus us : userStatusList) {
+				if(rc.getId().equals(us.getCurrentRoom().getId()))
 					k++;
 			}
-			presentList.add(k);
+			
+			rc.setCurrentPeople(k);
 		}
-		return new SynchStatus(userstatus, listroom, presentList);
+		
+		return new SynchStatus(userstatus, listRoomCount);
 	}
 
 }

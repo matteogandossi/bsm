@@ -8,7 +8,7 @@ public class BasicView {
 
 	public static int askForChoice() {
 		
-		System.out.print("Choice: ");
+		System.out.print("Choice: ");		
 		return scanner.nextInt();
 	}
 	
