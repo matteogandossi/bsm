@@ -1,9 +1,11 @@
 package controller;
+import java.io.Serializable;
 import java.util.ArrayList;
 import bsm.RoomCount;
 
-public class SynchStatus {
+public class SynchStatus implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	private UserStatus userStatus;
 	private ArrayList<RoomCount> roomCountList;
 	

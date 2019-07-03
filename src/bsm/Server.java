@@ -2,6 +2,8 @@ package bsm;
 
 import controller.Status;
 import threadServer.AdminThread;
+import threadServer.ServerSinchThread;
+import threadServer.ServerThread;
 
 public class Server {
 	
@@ -11,14 +13,16 @@ public class Server {
 
 	public static void main(String[] args){
 		
-		boolean stop = false;
 		Status status = new Status();
 		
-		AdminThread admthr = new AdminThread(status, stop);
+		ServerThread st = new ServerThread(status);
+		ServerSinchThread sst = new ServerSinchThread(status);
+		
+		AdminThread admthr = new AdminThread(status, st.getSocket(), sst.getSocket());
+		
 		admthr.start();
-		
-		
-		
+		st.start();
+		sst.start();		
 
 	}
 

@@ -1,21 +1,14 @@
 package bsm;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
 
-import model.DataBase;
+import java.io.Serializable;
 
+public class User implements Serializable{
 
-public class User {
+	private static final long serialVersionUID = 538026338908478551L;
+	
 	private String firstName;
     private String lastName;
     private String id;
-   // private String[] rooms;
     private String logIn;
     private String emailId;
     private String password;
@@ -25,13 +18,6 @@ public class User {
     private String dateOfBirth;
     private String securityQuestion1;
     private String securityQuestion2;
-  //  private String permissionUserId;
-//	private String choosenRoom;
-
-  //  private String roomName;
-  //  private int maxSize;
-   // private String roomPassword;
-	Scanner scanner = new Scanner(System.in);
 	
 	public void setFirstName(String firstName) { this.firstName = firstName; }
     public void setLastName(String lastName) { this.lastName = lastName; }
@@ -41,10 +27,7 @@ public class User {
     
     public void setId(String id) { this.id = id; }
     public String getId() { return id; }
-
-  //  public void setRooms(String[] rooms) { this.rooms = rooms; }
-  //  public String[] getRooms() { return rooms; }
-
+    
     public void setLogIn(String logIn) { this.logIn = logIn; }
     public String getLogIn() { return logIn; }
     
@@ -71,247 +54,6 @@ public class User {
     
     public void setSecurityQuestion2(String securityQuestion2) { this.securityQuestion2 = securityQuestion2; }
     public String getSecurityQuestion2() { return securityQuestion2; }
-    
-    /*public void setPermissionUserId(String permissionUserId) { this.permissionUserId = permissionUserId; }
-    public String getPermissionUserId() { return permissionUserId; }
-    
-    public void setChoosenRoom(String choosenRoom) { this.choosenRoom = choosenRoom; }
-    public String getChoosenRoom() { return choosenRoom; }
-    
-    public void setRoomName(String roomName) { this.roomName = roomName; }
-    public String getRoomtName() { return roomName; }
-    
-    public void setMaxSize(int maxSize) { this.maxSize = maxSize; }
-    public int getMaxSize() { return maxSize; }
-    
-    public void setRoomPassword(String roomPassword) { this.password = roomPassword; }
-    public String getRoomPassword() { return roomPassword; } */
-    
-    
-
-public void insertNewUser() { 
-	
-	User user = new User();
-	System.out.println("Please enter your first name for user ");
-    firstName = scanner.nextLine();
-    user.setFirstName(firstName);
-    
-    System.out.println("Please enter your last name");
-    lastName = scanner.nextLine();
-    user.setLastName(lastName);
-    
-	System.out.println("Please enter user's Email-id");
-	emailId = scanner.nextLine();
-	user.setEmailId(emailId);
-	
-	System.out.println("Please enter user's Designation");
-	designation = scanner.nextLine();
-	user.setDesignation(designation);
-	
-	System.out.println("Please enter user's Department");
-	department = scanner.nextLine();
-	user.setDepartment(department);
-	
-	System.out.println("Please enter user's Mobile Number");
-	mobileNumber = scanner.nextLine();
-	user.setMobileNumber(mobileNumber);
-	
-	System.out.println("Please enter user's DateOfBirth");
-	dateOfBirth = scanner.nextLine();
-	user.setDateOfBirth(dateOfBirth);
-	
-	System.out.println("Please enter user's Password");
-	password = scanner.nextLine();
-	user.setPassword(password);
-	
-	System.out.println("Please enter user's First Pet Name");
-	securityQuestion1 = scanner.nextLine();
-	user.setSecurityQuestion1(securityQuestion1);
-	
-	System.out.println("Please enter user's Birth Place");
-	securityQuestion2 = scanner.nextLine();
-	user.setSecurityQuestion2(securityQuestion2);
-
-    Statement st = DataBase.connect();
-	DataBase.insertNewUser(st,user,user.password) ;
-
-}
-
-public void deleteUser() throws SQLException { 
-	
-	User user = new User();
-	String answer;
-	Statement st = DataBase.connect();
-	ResultSet rs = DataBase.showUsers(st);
-	while(rs.next())
-    System.out.println(rs.getString("ID") + ".  " + rs.getString("firstName") + " " + rs.getString("SecondName")+ " " + rs.getString("email")); 
-	System.out.println("Please enter your user id delete user profile ");
-    answer = scanner.nextLine();
-    ResultSet rs1 = DataBase.userExist(st,answer);
-	if(rs1.next())
-	{
-	String tempEmail = rs1.getString("email");
-    DataBase.deleteUser(st,answer);
-    DataBase.deleteUserPermission(st,answer);
-    DataBase.deleteLogin(st,tempEmail);
-    System.out.println("Deleted the profile succesfully ");
-	}
-	else { System.out.println("User Id is doesn't exist");}
-}
-
-/*public void insertNewRoom() { 
-	User user = new User();
-	System.out.println("Please enter Room Name ");
-    roomName = scanner.nextLine();
-    user.setRoomName(roomName);
-    
-    System.out.println("Please enter Room's Maximum Size ");
-    maxSize = scanner.nextInt();
-    user.setMaxSize(maxSize);
-    
-    System.out.println("Please enter Room Password");
-	roomPassword = scanner.nextLine();
-	user.setRoomPassword(roomPassword);
-	
-	Statement st = DataBase.connect();
-	DataBase.insertNewRoom(st,user,user.roomPassword) ;
-    
-}
-
-public boolean checkRoomPassword(String input) { 
-
-    if (input.equals(roomPassword)) {
-        return true;
-    } 
-    return false;
-} 
-
-
-
-public void addremovePermission() throws SQLException { 
-	User user = new User();
-	String permissionAnswer;
-	
-
-    System.out.println("Do you want to add or remove permission");
-    permissionAnswer = scanner.nextLine();
-        if (permissionAnswer.toLowerCase().equals("add"))
-        {
-            System.out.println("Please enter user-id of User to add permission");
-            permissionUserId = scanner.nextLine();
-            Statement st = DataBase.connect();
-            ResultSet rs = DataBase.userExist(st,permissionUserId);
-        	if(rs.next())
-        	{
-        		Statement st1 = DataBase.connect();
-        		ResultSet rs1 = DataBase.selectRooms(st1);
-        		while(rs1.next())
-        	    System.out.println(rs1.getString("ID") + ".  " + rs1.getString("name")); 
-        		System.out.println("Choose the number for the rooms to add permission");
-        		choosenRoom = scanner.nextLine();
-        		ResultSet rs2 = DataBase.duplicatePermission(st1,permissionUserId,choosenRoom);
-        		if(rs2.next())
-            	{
-        			System.out.println("User already has permission to this room");
-            	}
-        		else
-        		{
-        		    user.setPermissionUserId(permissionUserId);
-        			user.setChoosenRoom(choosenRoom);
-        			DataBase.insertPermissions(st1,user) ;
-        			System.out.println("Added permission succesfully");
-        		}
-        		}
-        	else { System.out.println("User Id is doesn't exist");}
-            
-        }
-        else
-        {
-        	System.out.println("Please enter user-id of User to remove permission");
-            permissionUserId = scanner.nextLine();
-            Statement st = DataBase.connect();
-            ResultSet rs = DataBase.userExist(st,permissionUserId);
-        	if(rs.next())
-        	{
-        		Statement st1 = DataBase.connect();
-        		ResultSet rs1 = DataBase.selectRooms(st1);
-        		while(rs1.next())
-        	    System.out.println(rs1.getString("ID") + ".  " + rs1.getString("name")); 
-        		System.out.println("Choose the number for the rooms to remove permission");
-        		choosenRoom = scanner.nextLine();
-        		ResultSet rs2 = DataBase.duplicatePermission(st1,permissionUserId,choosenRoom);
-        		if(rs2.next())
-            	{
-        			DataBase.deletePermission(st1,permissionUserId,choosenRoom);
-        			System.out.println("Removed permission succesfully");
-            	}
-        		else
-        		{
-        			System.out.println("Invalid room number");
-            	}
-        	}
-        	else{System.out.println("User Id is doesn't exist");}
-        }
-}*/
-
-
-public void allStatus() { 
-
-}
-
-
-
-public void userLogedIn() { 
-
-}
-
-
-public void possionOfUsers() { 
-
-}
-
-public static void main(String[] args) throws SQLException {
-	
-	User user = new User();
-	Room room= new Room();
-	Scanner scanner = new Scanner(System.in);
-	//user.insertNewUser();
-	//user.addremovePermission();
-	//user.deleteUser();
-	int choosedOption;
-	System.out.println("Please enter opration number wish to perform");
-	System.out.println("1. Insert New User");
-    System.out.println("2. Delete User");
-    System.out.println("3. Insert New Room");
-    System.out.println("4. Delete Room");
-    System.out.println("5. Update Room Password");
-    System.out.println("6. Add/Remove permission");
-    choosedOption = scanner.nextInt();
-    switch (choosedOption)
-    {
-        case 1:
-        	user.insertNewUser();
-            break;
-        case 2:
-            user.deleteUser();
-            break;
-        case 3:
-            room.insertNewRoom();
-            break;
-        case 4:
-            room.deleteRoom();
-            break;
-        case 5:
-        	room.updateRoomPassword();
-            break;
-        //case 6:
-       // 	user.addremovePermission();
-        //    break;
-        default:
-            System.out.println("You gave the wrong input");
-            break;
-    }
-}
 
 }
 

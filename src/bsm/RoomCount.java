@@ -1,7 +1,10 @@
 package bsm;
 
-public class RoomCount extends Room {
+import java.io.Serializable;
+
+public class RoomCount extends Room implements Serializable {
 	
+	private static final long serialVersionUID = 2718944280352522821L;
 	private int currentPeople;
 	
 	public RoomCount(Room r) {

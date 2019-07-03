@@ -1,9 +1,13 @@
 package controller;
 
+import java.io.Serializable;
+
 import bsm.Room;
 import bsm.User;
 
-public class UserStatus {
+public class UserStatus implements Serializable{
+
+	private static final long serialVersionUID = -8682160853535360304L;
 	
 	User user;
 	private Room r;

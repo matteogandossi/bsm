@@ -289,7 +289,7 @@ public class Status {
 			k = 0;
 			//count all user in this room
 			for(UserStatus us : userStatusList) {
-				if(rc.getId().equals(us.getCurrentRoom().getId()))
+				if( us.getCurrentRoom() != null && rc.getId().equals(us.getCurrentRoom().getId()))
 					k++;
 			}
 			
