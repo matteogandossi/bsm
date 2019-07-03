@@ -8,7 +8,7 @@ import java.net.Socket;
 import bsm.Server;
 import controller.SynchStatus;
 
-public class SynchTread extends Thread {
+public class SynchThread extends Thread {
 	
 	private SynchStatus synchStatus;
 	private String idUser;
@@ -16,7 +16,7 @@ public class SynchTread extends Thread {
 	private Socket socket;
 	private boolean stop;
 	
-	public SynchTread(SynchStatus synchStatus) {
+	public SynchThread(SynchStatus synchStatus) {
 		
 		this.synchStatus = synchStatus;
 		stop = false;
@@ -69,9 +69,6 @@ public class SynchTread extends Thread {
 			} catch (Exception e) {
 				System.out.println("Error receive synchstatus of user " + idUser);
 			}
-			
-			System.out.println(synchStatus.getUserStatus());
-			System.out.println("Size: " + synchStatus.getRoomList().size());
 			
 			try {
 				socket.close();

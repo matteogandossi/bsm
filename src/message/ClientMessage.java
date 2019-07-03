@@ -18,8 +18,11 @@ public class ClientMessage implements Serializable{
 	private String idRoom; //enter
 	private String petName, birthPlace; //recovery
 	
-	private ClientMessage(String email, String password, String idUser, String idRoom, String petName, String birthPlace) {
+	private short type;
+	
+	private ClientMessage(short type, String email, String password, String idUser, String idRoom, String petName, String birthPlace) {
 		
+		this.type = type;
 		this.email = email;
 		this.password = password;
 		this.idUser = idUser;
@@ -29,24 +32,28 @@ public class ClientMessage implements Serializable{
 		
 	}
 	
-	public ClientMessage createLoginMessage(String email, String password) {
-		return new ClientMessage(email, password, null, null, null, null);
+	public static ClientMessage createLoginMessage(String email, String password) {
+		return new ClientMessage(LOGIN, email, password, null, null, null, null);
 	}
 	
-	public ClientMessage createEnterMessage(String idUser, String idRoom, String password) {
-		return new ClientMessage(null, password, idUser, idRoom, null, null);
+	public static ClientMessage createEnterMessage(String idUser, String idRoom, String password) {
+		return new ClientMessage(ENTER, null, password, idUser, idRoom, null, null);
 	}
 	
-	public ClientMessage createExitMessage(String idUser) {
-		return new ClientMessage(null, null, idUser, null, null, null);
+	public static ClientMessage createExitMessage(String idUser) {
+		return new ClientMessage(EXIT, null, null, idUser, null, null, null);
 	}
 	
-	public ClientMessage createLogoutMessage(String idUser) {
-		return new ClientMessage(null, null, idUser, null, null, null);
+	public static ClientMessage createLogoutMessage(String idUser) {
+		return new ClientMessage(LOGOUT, null, null, idUser, null, null, null);
 	}
 	
-	public ClientMessage createRecoveryMessage(String email, String petName, String birthPlace, String newPassword) {
-		return new ClientMessage(email, newPassword, null, null, petName, birthPlace);
+	public static ClientMessage createRecoveryMessage(String email, String petName, String birthPlace, String newPassword) {
+		return new ClientMessage(RECOVERY, email, newPassword, null, null, petName, birthPlace);
+	}
+	
+	public short getType() {
+		return type;
 	}
 
 	public String getEmail() {

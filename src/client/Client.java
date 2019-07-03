@@ -1,17 +1,17 @@
 package client;
 
 import controller.SynchStatus;
-import threadClient.SynchTread;
+import threadClient.SynchThread;
+import threadClient.UserThread;
 
 public class Client {
 	
 	public static void main(String[] args) {
 		
-//		String idUser = "5";
-//		SynchStatus sstatus = new SynchStatus(null, null);
-//		SynchTread st = new SynchTread(sstatus);
-//		st.setUserId(idUser);
-//		st.start();		
+		SynchStatus sstatus = new SynchStatus(null, null);		
+		SynchThread st = new SynchThread(sstatus);
+		UserThread ut = new UserThread(sstatus);
+		ut.start();		
 		
 	}
 

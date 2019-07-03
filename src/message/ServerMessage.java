@@ -21,11 +21,11 @@ public class ServerMessage implements Serializable{
 		this.userStatus = userStatus;
 	}
 	
-	public ServerMessage createAcceptMessage(UserStatus userStatus) {
+	public static ServerMessage createAcceptMessage(UserStatus userStatus) {
 		return new ServerMessage(ACCEPT, null, userStatus);
 	}
 	
-	public ServerMessage createRejectMessage(String message) {
+	public static ServerMessage createRejectMessage(String message) {
 		return new ServerMessage(REJECT, message, null);
 	}
 

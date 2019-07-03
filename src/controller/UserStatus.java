@@ -19,12 +19,20 @@ public class UserStatus implements Serializable{
 		logged = false;
 	}
 	
+	public User getUser() {
+		return user;
+	}
+	
 	public Room getCurrentRoom() {
 		return r;
 	}
 	
 	public boolean isLogged() {
 		return logged;
+	}
+	
+	public boolean isInside() {
+		return (r!=null);
 	}
 	
 	public void login() {

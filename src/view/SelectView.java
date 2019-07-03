@@ -2,7 +2,7 @@ package view;
 
 import java.util.ArrayList;
 
-import bsm.Room;
+import bsm.RoomCount;
 import bsm.User;
 import controller.RoomStatus;
 
@@ -31,6 +31,19 @@ public class SelectView{
 			System.out.println(roomStatusList.get(i).getRoom().getId() + ") "
 					+ roomStatusList.get(i).getRoom().getRoomName() + 
 					"(" + roomStatusList.get(i).peopleInside() + "/" + roomStatusList.get(i).getRoom().getMaxSize() + ")");
+			
+		return BasicView.askForId();		
+		
+	}
+	
+	public static String selectRoomClient(ArrayList<RoomCount> roomCountList) {
+		
+		System.out.println("Select the Room you want to enter.");
+		
+		for(int i = 0; i < roomCountList.size(); i++) 
+			System.out.println(roomCountList.get(i).getId() + ") "
+					+ roomCountList.get(i).getRoomName() + 
+					"(" + roomCountList.get(i).getCurrentPeople() + "/" + roomCountList.get(i).getMaxSize() + ")");
 			
 		return BasicView.askForId();		
 		
