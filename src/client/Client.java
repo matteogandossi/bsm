@@ -1,8 +1,6 @@
 package client;
 
 import controller.SynchStatus;
-import message.LoginMessage;
-import message.Message;
 import threadClient.SynchTread;
 
 public class Client {

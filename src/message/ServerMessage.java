@@ -1,12 +1,15 @@
 package message;
 
+import java.io.Serializable;
+
 import controller.UserStatus;
 
-public class ServerMessage implements Message {
+public class ServerMessage implements Serializable{
+	
+	private static final long serialVersionUID = 4496942655607309760L;
 	
 	public static final short ACCEPT = 1;
 	public static final short REJECT = 0;
-	public static final short LOGIN = 2;
 	
 	private short type;
 	private String message;
@@ -18,16 +21,12 @@ public class ServerMessage implements Message {
 		this.userStatus = userStatus;
 	}
 	
-	public ServerMessage createAcceptMessage() {
-		return new ServerMessage(ACCEPT, null, null);
+	public ServerMessage createAcceptMessage(UserStatus userStatus) {
+		return new ServerMessage(ACCEPT, null, userStatus);
 	}
 	
 	public ServerMessage createRejectMessage(String message) {
 		return new ServerMessage(REJECT, message, null);
-	}
-	
-	public ServerMessage createLoginMessage(UserStatus userStatus) {
-		return new ServerMessage(LOGIN, null, userStatus);
 	}
 
 	public short getType() {
