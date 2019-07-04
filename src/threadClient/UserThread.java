@@ -10,13 +10,14 @@ public class UserThread extends Thread {
 	private SynchStatus synchStatus;
 	private UserController userController;
 	private SynchThread synchThread;
-	private boolean logged;
+	private boolean logged,insideARoom;
 	
 	public UserThread(SynchStatus synchStatus) {
 		this.synchStatus = synchStatus;
 		synchThread = new SynchThread(synchStatus);
 		userController = new UserController(synchStatus, synchThread);
 		logged = false;
+		insideARoom = false;
 	}
 	
 	@Override
@@ -49,6 +50,20 @@ public class UserThread extends Thread {
 			else {
 				
 				choice = ClientView.loggedMenu(synchStatus.getUserStatus());
+				
+				switch (choice) {
+					
+					case 1: //enter
+						
+						if(!insideARoom)
+							insideARoom = userController.enter();
+						else
+							System.out.println("You are already inside a room, you need to exit first.");						
+						break;
+
+					default:
+						break;
+				}
 			}
 			
 			

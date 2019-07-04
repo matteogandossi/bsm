@@ -212,6 +212,16 @@ public class Status {
 		
 	}
 	
+	public boolean isUserAllowed(String idUser, String idRoom) {
+		
+		try {
+			permissionList.getPermission(idUser, idRoom);
+			return true;
+		} catch (PermissionNotFoundException e) {
+			return false;
+		}
+	}
+	
 	public boolean addNewPermission(String idUser, String idRoom) {
 		return permissionList.addNewPermission(new Permission(idUser, idRoom));
 	}

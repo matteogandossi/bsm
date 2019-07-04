@@ -2,6 +2,7 @@ package controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import bsm.RoomCount;
+import bsm.RoomNotFoundException;
 
 public class SynchStatus implements Serializable {
 	
@@ -18,6 +19,18 @@ public class SynchStatus implements Serializable {
 	public void setUserStatus(UserStatus us) {
 		userStatus = us;
 	}
+	
+	public RoomCount findRoom(String idRoom) throws RoomNotFoundException {
+		
+		if(idRoom == null)
+			throw new RoomNotFoundException();
+		
+		for(RoomCount rc : roomCountList)
+			if(rc.getId().equals(idRoom))
+				return rc;
+		
+		throw new RoomNotFoundException();
+	}
 
 	public UserStatus getUserStatus() {
 		return userStatus;
@@ -25,6 +38,12 @@ public class SynchStatus implements Serializable {
 
 	public ArrayList<RoomCount> getRoomList() {
 		return roomCountList;
+	}
+
+	public void update(SynchStatus updatedSynchStatus) {
+		this.userStatus = updatedSynchStatus.userStatus;
+		this.roomCountList = updatedSynchStatus.roomCountList;
+		
 	}
 
 

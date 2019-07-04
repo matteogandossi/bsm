@@ -48,4 +48,8 @@ public class RoomStatus {
 		
 	}
 
+	public boolean isFull() {
+		return (peopleInside() >= r.getMaxSize());
+	}
+
 }

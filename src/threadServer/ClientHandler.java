@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import bsm.RoomNotFoundException;
 import bsm.Server;
 import bsm.User;
 import bsm.UserNotFoundException;
@@ -92,6 +93,7 @@ public class ClientHandler extends Thread{
 		case ClientMessage.RECOVERY:
 				
 			try {
+				
 				UserStatus us = status.getUserStatusByEmail(clientMessage.getEmail());
 				String petName = clientMessage.getPetName();
 				String birthPlace = clientMessage.getBirthPlace();
@@ -112,10 +114,30 @@ public class ClientHandler extends Thread{
 		case ClientMessage.ENTER:
 			
 			try {
+				
 				UserStatus us = status.getUserStatus(clientMessage.getIdUser());
-			} catch (UserNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				String idRoom = clientMessage.getIdRoom();
+				String password = clientMessage.getPassword();
+				
+				if(!status.isUserAllowed(clientMessage.getIdUser(), idRoom))
+					return ServerMessage.createRejectMessage("The user is not allowed to enter that room.");
+							
+				if(password == null || (password != null && us.getUser().checkPassword(password))) {
+					
+					if(!status.getRoomStatus(idRoom).isFull()) {
+						us.enterRoom(status.getRoom(idRoom));
+						return ServerMessage.createAcceptMessage(us);
+					}
+					else
+						return ServerMessage.createRejectMessage("The room is full");
+				}
+				
+				return ServerMessage.createRejectMessage("Wrong room password");					
+				
+				
+			} catch (UserNotFoundException | RoomNotFoundException e) {
+				
+				return ServerMessage.createRejectMessage("User or room not found");
 			}
 	
 	

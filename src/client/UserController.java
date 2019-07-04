@@ -5,6 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import bsm.RoomCount;
+import bsm.RoomNotFoundException;
 import bsm.Server;
 import controller.SynchStatus;
 import message.ClientMessage;
@@ -85,8 +87,9 @@ public class UserController {
 		BasicView.serverAnswer(serverMessage);
 		
 		if(outcome) {
+			synchStatus.setUserStatus(serverMessage.getUserStatus());
+			synchThread.setUserId(serverMessage.getUserStatus().getUser().getId());
 			synchThread.start();
-			synchStatus.setUserStatus(serverMessage.getUserStatus());			
 		}
 		
 		return outcome;
@@ -107,10 +110,38 @@ public class UserController {
 		
 	}
 	
-	public void enter() {
+	public boolean enter() {
 		
 		System.out.println("Choose the room you want to enter: ");
 		String idRoom = SelectView.selectRoomClient(synchStatus.getRoomList());
+		String roomPassword = null;
+		
+		try {
+			
+			RoomCount rc = synchStatus.findRoom(idRoom);
+			if(rc.hasPassword())
+				roomPassword = BasicView.getString("Insert room's password: ");
+			
+			ClientMessage clientMessage = ClientMessage.createEnterMessage(synchStatus.getUserStatus().getUser().getId(), idRoom, roomPassword);
+			
+			ServerMessage serverMessage = send(clientMessage);
+			boolean outcome = serverMessage.getType() == ServerMessage.ACCEPT;
+			
+			BasicView.serverAnswer(serverMessage);
+			
+			if(outcome) {
+				synchStatus.setUserStatus(serverMessage.getUserStatus());			
+			}
+			
+			return outcome;
+			
+			
+		} catch (RoomNotFoundException e) {
+			System.out.println("No Room found with that ID");
+		}
+		
+		return false;
+		
 		
 	}
 	

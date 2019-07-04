@@ -13,7 +13,8 @@ public class RoomCount extends Room implements Serializable {
 		setId(r.getId());
 		setMaxSize(r.getMaxSize());
 		setRoomName(r.getRoomName());
-		setRoomPassword(r.getRoomPassword());
+		//security issue if I give all the passwords
+		setRoomPassword((r.getRoomPassword() == null )? null : "Privacy");
 	}
 	
 	public void setCurrentPeople(int n) {

@@ -65,7 +65,7 @@ public class SynchThread extends Thread {
 				return;
 			}
 			try {
-				synchStatus = (SynchStatus) ois.readObject();
+				synchStatus.update( (SynchStatus) ois.readObject() );
 			} catch (Exception e) {
 				System.out.println("Error receive synchstatus of user " + idUser);
 			}
@@ -77,7 +77,7 @@ public class SynchThread extends Thread {
 			}
 			
 			try {
-				Thread.sleep(10000);
+				Thread.sleep(50);
 			} catch (InterruptedException e) {
 				return;
 			}
