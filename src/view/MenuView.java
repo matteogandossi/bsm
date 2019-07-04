@@ -9,6 +9,7 @@ public class MenuView {
 		System.out.println("2) Add new User/Room/Permission");
 		System.out.println("3) Remove User/Room/Permission");
 		System.out.println("4) Show User/Room/Permissions");
+		System.out.println("5) Add/Update/Remove Room's password");
 		BasicView.backOrQuit("Quit");
 		return BasicView.askForChoice();
 		
@@ -45,6 +46,25 @@ public class MenuView {
 		BasicView.backOrQuit("Back");
 		return BasicView.askForChoice();
 		
+	}
+	
+	public static int hasRoomPassword() {
+		
+		System.out.println("This room has a password.");
+		System.out.println("Do you want to remove or update the password? ");
+		System.out.println("1) Remove");
+		System.out.println("2) Update");
+		BasicView.backOrQuit("Cancel");
+		return BasicView.askForChoice();
+	}
+	
+	public static int hasNoRoomPassword() {
+		
+		System.out.println("This room has no password.");
+		System.out.println("Do you want to add the password? ");
+		System.out.println("1) Add new Password");
+		BasicView.backOrQuit("Cancel");
+		return BasicView.askForChoice();
 	}
 
 }

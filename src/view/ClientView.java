@@ -24,7 +24,7 @@ public class ClientView {
 	
 	public static int loggedMenu(UserStatus us) {
 		
-		System.out.println("Hello" + us.getUser().getName() +"!");
+		System.out.println("Hello " + us.getUser().getName() +"!");
 		System.out.println(((!us.isInside())? "You are inside the building." : "You are in room \"" + us.getCurrentRoom().getRoomName() + "\"."));
 		System.out.println("Choose your operation.");
 		System.out.println("1) Enter a room");

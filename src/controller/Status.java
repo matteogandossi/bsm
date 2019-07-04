@@ -41,7 +41,7 @@ public class Status {
 			throw new UserNotFoundException();
 		
 		for(int i = 0; i < userStatusList.size(); i++)
-			if(userStatusList.get(i).user.getId().equals(userId)) 
+			if(userStatusList.get(i).getUser().getId().equals(userId)) 
 				return i;
 		
 		//if I cannot find it
@@ -52,6 +52,27 @@ public class Status {
 	public UserStatus getUserStatus(String userId) throws UserNotFoundException {
 		
 		return userStatusList.get(findUser(userId));
+	}
+	
+	public UserStatus getUserStatusByEmail(String email) throws UserNotFoundException {
+		
+		if(email == null)
+			throw new UserNotFoundException();
+		
+		for(UserStatus us : userStatusList)
+			if(us.getUser().getEmailId().equals(email))
+				return us;
+		
+		//if I cannot find it
+		throw new UserNotFoundException();
+	}
+	
+	public boolean updateUserPassword(String email, String newPassword) throws UserNotFoundException {
+		User user = getUserStatusByEmail(email).getUser();
+		boolean outcome = Model.updateUserPassword(email, newPassword);
+		if(outcome)
+			user.setPassword(Model.getHashedPassword(newPassword));
+		return outcome;
 	}
 	
 	public boolean addNewUser(User newUser, String password) {
@@ -69,15 +90,6 @@ public class Status {
 		}
 		
 		return false;
-	}
-	
-	public boolean updateUserPassword(String idUser, String newPassword) throws UserNotFoundException {
-		
-		User currentUser = userStatusList.get(findUser(idUser)).user;
-		currentUser.setPassword(Model.getHashedPassword(newPassword));
-		
-		return  Model.updateUserPassword(currentUser.getEmailId(), newPassword);
-		
 	}
 	
 	public int userCount() {
@@ -149,8 +161,17 @@ public class Status {
 	public boolean updateRoomPassword(String idRoom, String newPassword) throws RoomNotFoundException {
 		
 		Room currentRoom = roomList.get(findRoom(idRoom));
-		currentRoom.setRoomPassword(Model.getHashedPassword(newPassword));
-		return Model.updateRoomPassword(idRoom, newPassword);
+		boolean outcome = Model.updateRoomPassword(idRoom, newPassword);
+		
+		if(outcome) {
+			
+			if(newPassword == null)
+				currentRoom.setRoomPassword(null);
+			else
+				currentRoom.setRoomPassword(Model.getHashedPassword(newPassword));
+		}
+			
+		return outcome;
 		
 	}
 	
@@ -169,8 +190,8 @@ public class Status {
 		
 		for(int i = 0; i < userStatusList.size(); i++)
 			for(int j = 0; j < idUsers.size(); j++)
-				if(userStatusList.get(i).user.getId().equals(idUsers.get(j)))
-					allUsers.add(userStatusList.get(i).user);
+				if(userStatusList.get(i).getUser().getId().equals(idUsers.get(j)))
+					allUsers.add(userStatusList.get(i).getUser());
 		return allUsers;
 		
 	}
@@ -183,7 +204,7 @@ public class Status {
 		
 		for(int i = 0; i < list.size(); i++) {
 			try {
-				System.out.println( userStatusList.get(findUser(list.get(i).getIdUser())).user.getName() +
+				System.out.println( userStatusList.get(findUser(list.get(i).getIdUser())).getUser().getName() +
 						" - " + roomList.get(findRoom(list.get(i).getIdRoom())).getRoomName());
 			} catch (Exception e) {
 			}
@@ -206,7 +227,7 @@ public class Status {
 		ArrayList<User> list = new ArrayList<User>();
 		
 		for(int i = 0; i < userStatusList.size(); i++)
-			list.add(userStatusList.get(i).user);
+			list.add(userStatusList.get(i).getUser());
 		
 		return list;
 	}
@@ -220,8 +241,10 @@ public class Status {
 		ArrayList<User> list = new ArrayList<User>();
 		
 		for(int i = 0; i < userStatusList.size(); i++)
-			if(logged == userStatusList.get(i).isLogged())
-				list.add(userStatusList.get(i).user);		
+			if(userStatusList.get(i).isLogged() == logged && logged == true && userStatusList.get(i).getCurrentRoom() == null)
+				list.add(userStatusList.get(i).getUser());
+			else if (userStatusList.get(i).isLogged() == logged && logged == false)
+				list.add(userStatusList.get(i).getUser());
 		
 		return list;
 		
@@ -237,7 +260,7 @@ public class Status {
 			
 			for(int j = 0; j < userStatusList.size(); j++)				
 				if(userStatusList.get(j).getCurrentRoom() == roomList.get(i))
-					list.get(i).add(userStatusList.get(j).user);			
+					list.get(i).add(userStatusList.get(j).getUser());			
 		}
 		
 		return list;
@@ -249,7 +272,7 @@ public class Status {
 		
 		for(int i = 0; i < userStatusList.size(); i++)
 			if(userStatusList.get(i).getCurrentRoom() == rs.getRoom())
-				rs.add(userStatusList.get(i).user);
+				rs.add(userStatusList.get(i).getUser());
 		
 		return rs;
 	}
@@ -298,5 +321,9 @@ public class Status {
 		
 		return new SynchStatus(userstatus, listRoomCount);
 	}
+	
+	
+	/// methods for client request
+	
 
 }

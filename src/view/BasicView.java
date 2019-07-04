@@ -2,6 +2,8 @@ package view;
 
 import java.util.Scanner;
 
+import message.ServerMessage;
+
 public class BasicView {
 	
 	protected static Scanner scanner = new Scanner(System.in);
@@ -33,9 +35,21 @@ public class BasicView {
 			System.out.println("Operation NOT completed.");
 	}
 	
+	public static void serverAnswer(ServerMessage sermsg) {
+		if(sermsg.getType() == ServerMessage.ACCEPT)
+			System.out.println("Operation accepted and completed.");
+		else
+			System.out.println("Operation rejected because: " + sermsg.getMessage());
+	}
+	
 	public static void cantCompleteOperation(String why) {
 		System.out.println("Sorry! I can't complete this operation.");
 		System.out.println("Reason: " + why + ".");
+	}
+	
+	public static String getString(String message) {
+		System.out.print(message);
+		return scanner.next();
 	}
 
 }

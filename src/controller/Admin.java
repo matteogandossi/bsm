@@ -7,6 +7,7 @@ import bsm.User;
 import bsm.UserNotFoundException;
 import view.AddView;
 import view.BasicView;
+import view.MenuView;
 import view.SelectView;
 import view.ShowView;
 
@@ -136,7 +137,7 @@ public class Admin{
 				String idUser = SelectView.selectUser(status.getAllUsers());
 				
 				try {
-					User u = status.getUserStatus(idUser).user;
+					User u = status.getUserStatus(idUser).getUser();
 					ShowView.showUser(u, status.permittedRooms(u));
 					
 				} catch (UserNotFoundException e) {
@@ -165,6 +166,61 @@ public class Admin{
 			default:
 				break;
 		}
+		
+	}
+	
+	public void manageRoom() {
+		
+		String idRoom = SelectView.selectRoom(status.getAllRoomsStatus());
+		boolean outcome;
+		
+		try {
+			Room r = status.getRoom(idRoom);
+			
+			if(r.hasPassword()) {
+				
+				int choice = MenuView.hasRoomPassword();
+				
+				switch (choice) {
+				
+					case 1:
+						outcome = status.updateRoomPassword(idRoom, null);
+						BasicView.confirmOrAbort(outcome);
+						break;
+						
+					case 2:
+						String newPassword = BasicView.getString("Insert the new password: ");
+						outcome = status.updateRoomPassword(idRoom, newPassword);
+						BasicView.confirmOrAbort(outcome);
+						break;
+	
+					default:
+						break;
+				}	
+				
+			}
+			else {
+				
+				int choice = MenuView.hasNoRoomPassword();
+				
+				switch (choice) {
+				
+					case 1:
+						String newPassword = BasicView.getString("Insert the new password: ");
+						outcome = status.updateRoomPassword(idRoom, newPassword);
+						BasicView.confirmOrAbort(outcome);
+						break;
+	
+					default:
+						break;
+				}
+			}
+
+			
+		} catch (RoomNotFoundException e) {
+			BasicView.cantCompleteOperation("The selected room is not found");
+		}
+		
 		
 	}
 	

@@ -14,6 +14,10 @@ public class SynchStatus implements Serializable {
 		this.userStatus = userStatus;
 		this.roomCountList = roomList;
 	}
+	
+	public void setUserStatus(UserStatus us) {
+		userStatus = us;
+	}
 
 	public UserStatus getUserStatus() {
 		return userStatus;

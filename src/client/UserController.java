@@ -12,6 +12,7 @@ import message.ServerMessage;
 import threadClient.SynchThread;
 import view.BasicView;
 import view.ClientView;
+import view.SelectView;
 
 public class UserController {
 	
@@ -74,17 +75,20 @@ public class UserController {
 	public boolean login() {
 		
 		String email = ClientView.getString("Insert your email: ");
-		String password = ClientView.getString("Inserit your password: ");
+		String password = ClientView.getString("Insert your password: ");
 		
 		ClientMessage clientMessage = ClientMessage.createLoginMessage(email, password);
 		
 		ServerMessage serverMessage = send(clientMessage);
 		boolean outcome = serverMessage.getType() == ServerMessage.ACCEPT;
 		
-		BasicView.confirmOrAbort(outcome);
-		if(outcome) 
+		BasicView.serverAnswer(serverMessage);
+		
+		if(outcome) {
 			synchThread.start();
-
+			synchStatus.setUserStatus(serverMessage.getUserStatus());			
+		}
+		
 		return outcome;
 	}
 
@@ -98,12 +102,15 @@ public class UserController {
 		ClientMessage clientMessage = ClientMessage.createRecoveryMessage(email, petName, birthPlace, newPassword);
 		
 		ServerMessage serverMessage = send(clientMessage);
-		boolean outcome = serverMessage.getType() == ServerMessage.ACCEPT;
+
+		BasicView.serverAnswer(serverMessage);
 		
-		BasicView.confirmOrAbort(outcome);
-		if(!outcome)
-			System.out.println("");
-		//fare una funzione sola,
+	}
+	
+	public void enter() {
+		
+		System.out.println("Choose the room you want to enter: ");
+		String idRoom = SelectView.selectRoomClient(synchStatus.getRoomList());
 		
 	}
 	

@@ -45,6 +45,9 @@ public class AdminThread extends Thread {
 					internalChoice = MenuView.showMenu();
 					admin.show(internalChoice);
 					break;
+				case 5:
+					admin.manageRoom();
+					break;
 			}
 			
 		} while(choice != 0);

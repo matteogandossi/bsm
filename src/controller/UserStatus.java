@@ -9,7 +9,7 @@ public class UserStatus implements Serializable{
 
 	private static final long serialVersionUID = -8682160853535360304L;
 	
-	User user;
+	private User user;
 	private Room r;
 	private boolean logged;
 	

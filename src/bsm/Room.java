@@ -22,12 +22,14 @@ public class Room implements Serializable {
 	public void setRoomPassword(String roomPassword) { this.roomPassword = roomPassword; }
 	public String getRoomPassword() { return roomPassword; }
 	
+	public boolean hasPassword() {
+		return (roomPassword != null);
+	}
+	
 	public boolean checkPassword(String input) { 
 	
-	    if (input.equals(roomPassword)) {
-	        return true;
-	    } 
-	    return false;
+	    return (input != null && input.equals(roomPassword));
+
 	}
  
 

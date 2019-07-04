@@ -54,6 +54,10 @@ public class User implements Serializable{
     
     public void setSecurityQuestion2(String securityQuestion2) { this.securityQuestion2 = securityQuestion2; }
     public String getSecurityQuestion2() { return securityQuestion2; }
+    
+    public boolean checkPassword(String input) {
+    	return (input != null && password.equals(input));
+    }
 
 }
 

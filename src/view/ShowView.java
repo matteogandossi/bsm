@@ -51,14 +51,23 @@ public class ShowView {
 		
 		System.out.println("Status of all server.");
 		ArrayList<RoomStatus> list = status.getAllRoomsStatus();
-		ArrayList<User> userList = status.getLoggedOrNotUsers(false);
+		ArrayList<User> userListNotLogged = status.getLoggedOrNotUsers(false);
+		ArrayList<User> userListLogged = status.getLoggedOrNotUsers(true);
 		
 		for(int i = 0; i < list.size(); i++)
 			list.get(i).print();
 		
+		System.out.println();
+		
+		System.out.println("Logged and at the entrance:");
+		for(int i = 0; i < userListLogged.size(); i++)
+			System.out.println(userListLogged.get(i).getName());
+		
+		System.out.println();
+		
 		System.out.println("Not logged:");
-		for(int i = 0; i < userList.size(); i++)
-			System.out.println(userList.get(i).getName());
+		for(int i = 0; i < userListNotLogged.size(); i++)
+			System.out.println(userListNotLogged.get(i).getName());
 	}
 
 }

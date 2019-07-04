@@ -6,10 +6,13 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import bsm.Server;
+import bsm.User;
 import bsm.UserNotFoundException;
 import controller.Status;
+import controller.UserStatus;
 import message.ClientMessage;
 import message.ServerMessage;
+import model.Model;
 
 public class ClientHandler extends Thread{
 	
@@ -69,17 +72,55 @@ public class ClientHandler extends Thread{
 		
 		
 			case ClientMessage.LOGIN:
-				System.out.println("Name " + clientMessage.getEmail());
+				
+				try {
+					
+					UserStatus us = status.getUserStatusByEmail(clientMessage.getEmail());
+					String hashedPassword = Model.getHashedPassword(clientMessage.getPassword());
+					if(us.getUser().checkPassword(hashedPassword)) {
+						us.login();
+						return ServerMessage.createAcceptMessage(us);
+					}
+					else
+						return ServerMessage.createRejectMessage("Wrong password.");
+					
+				} catch (UserNotFoundException e) {
+	
+					return ServerMessage.createRejectMessage("The user doesn't exist.");
+				}
+				
+		case ClientMessage.RECOVERY:
+				
 			try {
-				serverMessage = ServerMessage.createAcceptMessage(status.getUserStatus("5"));
+				UserStatus us = status.getUserStatusByEmail(clientMessage.getEmail());
+				String petName = clientMessage.getPetName();
+				String birthPlace = clientMessage.getBirthPlace();
+				
+				if(us.getUser().getSecurityQuestion1().equals(petName) && us.getUser().getSecurityQuestion2().equals(birthPlace)) {
+					if(status.updateUserPassword(clientMessage.getEmail(), clientMessage.getPassword()))
+						return ServerMessage.createAcceptMessage(us);
+					return ServerMessage.createRejectMessage("Something went wrong in Database");
+				}
+				
+				return ServerMessage.createRejectMessage("Wrong security questions");
+				
+				} catch (UserNotFoundException e) {
+					
+					return ServerMessage.createRejectMessage("The user doesn't exist.");
+				}
+			
+		case ClientMessage.ENTER:
+			
+			try {
+				UserStatus us = status.getUserStatus(clientMessage.getIdUser());
 			} catch (UserNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-				break;
 	
 	
 		}
+		
 		return serverMessage;
 	}
 
