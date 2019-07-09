@@ -59,13 +59,13 @@ public class ShowView {
 		
 		System.out.println();
 		
-		System.out.println("Logged and at the entrance:");
+		System.out.println("Logged and at the entrance (" + userListLogged.size() + "):");
 		for(int i = 0; i < userListLogged.size(); i++)
 			System.out.println(userListLogged.get(i).getName());
 		
 		System.out.println();
 		
-		System.out.println("Not logged:");
+		System.out.println("Not logged (" + userListNotLogged.size() + "):");
 		for(int i = 0; i < userListNotLogged.size(); i++)
 			System.out.println(userListNotLogged.get(i).getName());
 	}

@@ -38,7 +38,7 @@ public class RoomStatus {
 	
 	public void print() {
 		
-		System.out.println("In room '" + r.getRoomName() + "' ( " + listUser.size() + "//" + r.getMaxSize() + "):");
+		System.out.println("In room '" + r.getRoomName() + "' (" + listUser.size() + "/" + r.getMaxSize() + "):");
 		
 		if(peopleInside() == 0)
 			System.out.println();
