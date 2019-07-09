@@ -2,20 +2,17 @@ package threadClient;
 
 import client.UserController;
 import controller.SynchStatus;
-import view.BasicView;
 import view.ClientView;
 
 public class UserThread extends Thread {
 	
 	private SynchStatus synchStatus;
 	private UserController userController;
-	private SynchThread synchThread;
 	private boolean logged,insideARoom;
 	
 	public UserThread(SynchStatus synchStatus) {
 		this.synchStatus = synchStatus;
-		synchThread = new SynchThread(synchStatus);
-		userController = new UserController(synchStatus, synchThread);
+		userController = new UserController(synchStatus);
 		logged = false;
 		insideARoom = false;
 	}

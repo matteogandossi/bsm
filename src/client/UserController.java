@@ -22,9 +22,8 @@ public class UserController {
 	private SynchThread synchThread;
 	
 
-	public UserController(SynchStatus synchStatus, SynchThread synchThread) {
+	public UserController(SynchStatus synchStatus) {
 		this.synchStatus = synchStatus;
-		this.synchThread = synchThread;
 	}
 	
 	private ServerMessage send(ClientMessage clientMessage) {
@@ -88,6 +87,7 @@ public class UserController {
 		
 		if(outcome) {
 			synchStatus.setUserStatus(serverMessage.getUserStatus());
+			synchThread = new SynchThread(synchStatus);
 			synchThread.setUserId(serverMessage.getUserStatus().getUser().getId());
 			synchThread.start();
 		}

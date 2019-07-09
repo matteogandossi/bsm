@@ -34,9 +34,7 @@ public class SynchThread extends Thread {
 	
 	@Override
 	public void run() {
-		
-		stop = false;
-		
+
 		while(!stop) {
 			
 			try {
