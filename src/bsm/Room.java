@@ -26,7 +26,7 @@ public class Room implements Serializable {
 		return (roomPassword != null);
 	}
 	
-	public boolean checkPassword(String input) { 
+	public boolean checkPassword(String input) {
 	
 	    return (input != null && input.equals(roomPassword));
 

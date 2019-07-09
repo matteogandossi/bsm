@@ -5,9 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import bsm.Room;
 import bsm.RoomNotFoundException;
-import bsm.Server;
-import bsm.User;
 import bsm.UserNotFoundException;
 import controller.Status;
 import controller.UserStatus;
@@ -117,12 +116,17 @@ public class ClientHandler extends Thread{
 				
 				UserStatus us = status.getUserStatus(clientMessage.getIdUser());
 				String idRoom = clientMessage.getIdRoom();
+				Room room = status.getRoom(idRoom);
 				String password = clientMessage.getPassword();
+				
+				if(us.isInside())
+					return ServerMessage.createRejectMessage("The user is already inside a room");
 				
 				if(!status.isUserAllowed(clientMessage.getIdUser(), idRoom))
 					return ServerMessage.createRejectMessage("The user is not allowed to enter that room.");
 							
-				if(password == null || (password != null && us.getUser().checkPassword(password))) {
+				if(password == null || 
+						(password != null && room.checkPassword(Model.getHashedPassword(password)))) {
 					
 					if(!status.getRoomStatus(idRoom).isFull()) {
 						us.enterRoom(status.getRoom(idRoom));
@@ -139,7 +143,41 @@ public class ClientHandler extends Thread{
 				
 				return ServerMessage.createRejectMessage("User or room not found");
 			}
-	
+			
+		case ClientMessage.EXIT:
+			
+			try {
+				UserStatus us = status.getUserStatus(clientMessage.getIdUser());
+				
+				if(!us.isInside())
+					return ServerMessage.createRejectMessage("The user is already out");
+				
+				us.exitRoom();
+				
+				return ServerMessage.createAcceptMessage(us);
+				
+			} catch (UserNotFoundException e) {
+				
+				return ServerMessage.createRejectMessage("User not found");
+			}
+			
+		case ClientMessage.LOGOUT:
+			
+			try {
+				UserStatus us = status.getUserStatus(clientMessage.getIdUser());
+				
+				if(!us.isLogged())
+					return ServerMessage.createRejectMessage("The user is not logged");
+				
+				us.logout();
+				
+				return ServerMessage.createAcceptMessage(us);
+				
+			} catch (UserNotFoundException e) {
+				
+				return ServerMessage.createRejectMessage("User not found");
+			}
+			
 	
 		}
 		

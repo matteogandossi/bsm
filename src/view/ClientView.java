@@ -1,7 +1,12 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import bsm.Room;
+import bsm.RoomCount;
+import bsm.User;
+import controller.SynchStatus;
 import controller.UserStatus;
 
 public class ClientView {
@@ -33,6 +38,25 @@ public class ClientView {
 		BasicView.backOrQuit("Logout");
 		
 		return BasicView.askForChoice();
+		
+	}
+	
+	public static void showInformation(SynchStatus ss) {
+		
+		User user = ss.getUserStatus().getUser();
+		ArrayList<RoomCount> roomCountList = ss.getRoomList();
+		
+		System.out.println("Showing your information...");
+		System.out.println("Name: " + user.getName());
+		System.out.println("DoB: "+ user.getDateOfBirth());
+		System.out.println("E-mail:  " + user.getEmailId());
+		System.out.println("Designation: " + user.getDesignation());
+		System.out.println("Department: " + user.getDepartment());
+	
+		System.out.println("You can enter the following rooms: ");
+		for(RoomCount rc :  roomCountList)
+			System.out.println(rc.getRoomName());
+		System.out.println("END.");
 		
 	}
 

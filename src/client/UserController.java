@@ -112,7 +112,11 @@ public class UserController {
 	
 	public boolean enter() {
 		
-		System.out.println("Choose the room you want to enter: ");
+		if(synchStatus.getRoomList().isEmpty()) {
+			System.out.println("You can't enter any room.");
+			return false;
+		}
+		
 		String idRoom = SelectView.selectRoomClient(synchStatus.getRoomList());
 		String roomPassword = null;
 		
@@ -143,6 +147,37 @@ public class UserController {
 		return false;
 		
 		
+	}
+
+	public boolean exit() {
+		
+		ClientMessage clientMessage = ClientMessage.createExitMessage(synchStatus.getUserStatus().getUser().getId());
+		ServerMessage serverMessage = send(clientMessage);
+		boolean outcome = serverMessage.getType() == ServerMessage.ACCEPT;
+		
+		BasicView.serverAnswer(serverMessage);
+		
+		if(outcome) {
+			synchStatus.setUserStatus(serverMessage.getUserStatus());			
+		}
+		
+		return outcome; 
+	}
+
+	public boolean logout() {
+
+		ClientMessage clientMessage = ClientMessage.createLogoutMessage(synchStatus.getUserStatus().getUser().getId());
+		ServerMessage serverMessage = send(clientMessage);
+		boolean outcome = serverMessage.getType() == ServerMessage.ACCEPT;
+		
+		BasicView.serverAnswer(serverMessage);
+		
+		if(outcome) {
+			synchThread.stopSynching();
+			synchStatus.setUserStatus(serverMessage.getUserStatus());
+		}
+		
+		return outcome;
 	}
 	
 	

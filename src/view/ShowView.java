@@ -32,7 +32,7 @@ public class ShowView {
 		System.out.println("Showing room with ID " + room.getId() + ".");
 		System.out.println("Name: " + room.getRoomName());
 		System.out.println("Maximum capacity: " + room.getMaxSize());
-		System.out.println("Has a password? " + ((room.getRoomPassword() == null)?"YES":"NO"));
+		System.out.println("Has a password? " + ((room.hasPassword())?"YES":"NO"));
 		System.out.println("The room can be entered by the following users: ");
 		for(User pu: permittedUsers)
 			System.out.println(pu.getName());
