@@ -5,8 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import controller.Status;
-import controller.SynchStatus;
+import status.Status;
+import status.SynchStatus;
 
 public class ClientSinchHandler extends Thread{
 	

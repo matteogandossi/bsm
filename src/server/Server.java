@@ -1,6 +1,6 @@
-package bsm;
+package server;
 
-import controller.Status;
+import status.Status;
 import threadServer.AdminThread;
 import threadServer.ServerSinchThread;
 import threadServer.ServerThread;

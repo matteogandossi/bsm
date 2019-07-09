@@ -1,6 +1,6 @@
 package client;
 
-import controller.SynchStatus;
+import status.SynchStatus;
 import threadClient.UserThread;
 
 public class Client {

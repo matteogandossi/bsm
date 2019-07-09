@@ -5,8 +5,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 
-import bsm.Server;
-import controller.Status;
+import server.Server;
+import status.Status;
 
 public class ServerThread extends Thread {
 	

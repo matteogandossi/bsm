@@ -3,8 +3,8 @@ package threadServer;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-import controller.Admin;
-import controller.Status;
+import server.Admin;
+import status.Status;
 import view.MenuView;
 
 public class AdminThread extends Thread {

@@ -5,8 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import bsm.Server;
-import controller.SynchStatus;
+import server.Server;
+import status.SynchStatus;
 
 public class SynchThread extends Thread {
 	
@@ -76,7 +76,7 @@ public class SynchThread extends Thread {
 			}
 			
 			try {
-				Thread.sleep(50);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				return;
 			}

@@ -1,4 +1,4 @@
-package bsm;
+package basic;
 
 import java.io.Serializable;
 

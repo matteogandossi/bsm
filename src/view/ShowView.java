@@ -2,10 +2,10 @@ package view;
 
 import java.util.ArrayList;
 
-import bsm.Room;
-import bsm.User;
-import controller.RoomStatus;
-import controller.Status;
+import basic.Room;
+import basic.User;
+import status.RoomStatus;
+import status.Status;
 
 public class ShowView {
 	

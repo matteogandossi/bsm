@@ -2,7 +2,7 @@ package message;
 
 import java.io.Serializable;
 
-import controller.UserStatus;
+import status.UserStatus;
 
 public class ServerMessage implements Serializable{
 	

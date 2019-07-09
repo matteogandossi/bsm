@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import bsm.Permission;
-import bsm.Room;
-import bsm.User;
+import basic.Permission;
+import basic.Room;
+import basic.User;
 
 public class DataBase {
 	

@@ -5,14 +5,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import bsm.Room;
-import bsm.RoomNotFoundException;
-import bsm.UserNotFoundException;
-import controller.Status;
-import controller.UserStatus;
+import basic.Room;
+import exceptions.RoomNotFoundException;
+import exceptions.UserNotFoundException;
 import message.ClientMessage;
 import message.ServerMessage;
 import model.Model;
+import status.Status;
+import status.UserStatus;
 
 public class ClientHandler extends Thread{
 	

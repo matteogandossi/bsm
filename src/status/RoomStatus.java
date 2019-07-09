@@ -1,9 +1,9 @@
-package controller;
+package status;
 
 import java.util.ArrayList;
 
-import bsm.Room;
-import bsm.User;
+import basic.Room;
+import basic.User;
 
 public class RoomStatus {
 	
@@ -38,10 +38,10 @@ public class RoomStatus {
 	
 	public void print() {
 		
-		System.out.println("In room '" + r.getRoomName() + "':");
+		System.out.println("In room '" + r.getRoomName() + "' ( " + listUser.size() + "//" + r.getMaxSize() + "):");
 		
 		if(peopleInside() == 0)
-			System.out.println("No one.");
+			System.out.println();
 		
 		for(int i = 0; i < listUser.size(); i++)
 			System.out.println(listUser.get(i).getName());

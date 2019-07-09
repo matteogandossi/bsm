@@ -5,12 +5,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import bsm.RoomCount;
-import bsm.RoomNotFoundException;
-import bsm.Server;
-import controller.SynchStatus;
+import basic.RoomCount;
+import exceptions.RoomNotFoundException;
 import message.ClientMessage;
 import message.ServerMessage;
+import server.Server;
+import status.SynchStatus;
 import threadClient.SynchThread;
 import view.BasicView;
 import view.ClientView;

@@ -3,11 +3,11 @@ package view;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import bsm.Room;
-import bsm.RoomCount;
-import bsm.User;
-import controller.SynchStatus;
-import controller.UserStatus;
+import basic.Room;
+import basic.RoomCount;
+import basic.User;
+import status.SynchStatus;
+import status.UserStatus;
 
 public class ClientView {
 	

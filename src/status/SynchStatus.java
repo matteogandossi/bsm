@@ -1,8 +1,9 @@
-package controller;
+package status;
 import java.io.Serializable;
 import java.util.ArrayList;
-import bsm.RoomCount;
-import bsm.RoomNotFoundException;
+
+import basic.RoomCount;
+import exceptions.RoomNotFoundException;
 
 public class SynchStatus implements Serializable {
 	

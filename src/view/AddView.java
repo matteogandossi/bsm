@@ -2,8 +2,8 @@ package view;
 
 import java.util.Scanner;
 
-import bsm.Room;
-import bsm.User;
+import basic.Room;
+import basic.User;
 
 public class AddView{
 	

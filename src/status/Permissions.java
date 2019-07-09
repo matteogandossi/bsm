@@ -1,12 +1,12 @@
-package controller;
+package status;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import bsm.Permission;
-import bsm.PermissionNotFoundException;
-import bsm.Room;
-import bsm.User;
+import basic.Permission;
+import basic.Room;
+import basic.User;
+import exceptions.PermissionNotFoundException;
 import model.Model;
 
 public class Permissions{

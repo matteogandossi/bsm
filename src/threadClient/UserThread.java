@@ -1,7 +1,7 @@
 package threadClient;
 
 import client.UserController;
-import controller.SynchStatus;
+import status.SynchStatus;
 import view.ClientView;
 
 public class UserThread extends Thread {

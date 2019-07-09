@@ -1,10 +1,11 @@
-package bsm;
+package basic;
 
 import java.io.Serializable;
 
 public class Room implements Serializable {
 
 	private static final long serialVersionUID = 1486633036256021265L;
+	
 	private String id;
     private String roomName;
     private int maxSize;
@@ -27,6 +28,9 @@ public class Room implements Serializable {
 	}
 	
 	public boolean checkPassword(String input) {
+		
+		if(roomPassword == null)
+			return true;
 	
 	    return (input != null && input.equals(roomPassword));
 

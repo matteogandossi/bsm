@@ -1,9 +1,9 @@
-package controller;
+package status;
 
 import java.io.Serializable;
 
-import bsm.Room;
-import bsm.User;
+import basic.Room;
+import basic.User;
 
 public class UserStatus implements Serializable{
 
