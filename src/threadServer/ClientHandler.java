@@ -193,10 +193,12 @@ public class ClientHandler extends Thread{
 					log.writeLogout(us.getUser().getEmailId(), false, "user_not_logged");
 					return ServerMessage.createRejectMessage("The user is not logged");
 				}
-					
 				
-				us.logout();
+				if(us.isInside())
+					log.writeExit(us.getUser().getEmailId(), true, us.getCurrentRoom().getRoomName(), Log.DEFAULT);
 				log.writeLogout(us.getUser().getEmailId(), true, Log.DEFAULT);
+				us.logout();
+				
 				return ServerMessage.createAcceptMessage(us);
 				
 			} catch (UserNotFoundException e) {
