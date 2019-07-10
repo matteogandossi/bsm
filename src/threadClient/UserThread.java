@@ -90,6 +90,8 @@ public class UserThread extends Thread {
 			
 		} while(!out);
 		
+		System.out.println("Goodbye.");
+		
 	}
 
 }

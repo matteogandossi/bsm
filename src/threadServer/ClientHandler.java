@@ -8,6 +8,7 @@ import java.net.Socket;
 import basic.Room;
 import exceptions.RoomNotFoundException;
 import exceptions.UserNotFoundException;
+import log.Log;
 import message.ClientMessage;
 import message.ServerMessage;
 import model.Model;
@@ -18,10 +19,12 @@ public class ClientHandler extends Thread{
 	
 	private Socket socket;
 	private Status status;
+	private Log log;
 	
 	public ClientHandler(Socket socket, Status status) {
 		this.socket = socket;
 		this.status = status;
+		log = Log.getInstance();
 	}
 	
 	public void run() {
@@ -79,10 +82,14 @@ public class ClientHandler extends Thread{
 					String hashedPassword = Model.getHashedPassword(clientMessage.getPassword());
 					if(us.getUser().checkPassword(hashedPassword)) {
 						us.login();
+						log.writeLogin(us.getUser().getEmailId(), true, Log.DEFAULT);
 						return ServerMessage.createAcceptMessage(us);
 					}
-					else
+					else {
+						log.writeLogin(us.getUser().getEmailId(), false, "wrong_password");
 						return ServerMessage.createRejectMessage("Wrong password.");
+					}
+						
 					
 				} catch (UserNotFoundException e) {
 	
@@ -98,11 +105,14 @@ public class ClientHandler extends Thread{
 				String birthPlace = clientMessage.getBirthPlace();
 				
 				if(us.getUser().getSecurityQuestion1().equals(petName) && us.getUser().getSecurityQuestion2().equals(birthPlace)) {
-					if(status.updateUserPassword(clientMessage.getEmail(), clientMessage.getPassword()))
+					if(status.updateUserPassword(clientMessage.getEmail(), clientMessage.getPassword())) {
+						log.writeRecovery(us.getUser().getEmailId(), true, Log.DEFAULT);
 						return ServerMessage.createAcceptMessage(us);
+					}
+					log.writeRecovery(us.getUser().getEmailId(), false, "database_error");	
 					return ServerMessage.createRejectMessage("Something went wrong in Database");
 				}
-				
+				log.writeRecovery(us.getUser().getEmailId(), false, "wrong_security_questions");
 				return ServerMessage.createRejectMessage("Wrong security questions");
 				
 				} catch (UserNotFoundException e) {
@@ -119,23 +129,33 @@ public class ClientHandler extends Thread{
 				Room room = status.getRoom(idRoom);
 				String password = clientMessage.getPassword();
 				
-				if(us.isInside())
+				if(us.isInside()) {
+					log.writeEnter(us.getUser().getEmailId(), false, room.getRoomName(), "user_already_inside");
 					return ServerMessage.createRejectMessage("The user is already inside a room");
+				}
+					
 				
-				if(!status.isUserAllowed(clientMessage.getIdUser(), idRoom))
+				if(!status.isUserAllowed(clientMessage.getIdUser(), idRoom)) {
+					log.writeEnter(us.getUser().getEmailId(), false, room.getRoomName(), "user_not_allowed");
 					return ServerMessage.createRejectMessage("The user is not allowed to enter that room.");
+				}
+					
 							
 				if(password == null || 
 						(password != null && room.checkPassword(Model.getHashedPassword(password)))) {
 					
 					if(!status.getRoomStatus(idRoom).isFull()) {
 						us.enterRoom(status.getRoom(idRoom));
+						log.writeEnter(us.getUser().getEmailId(), true, room.getRoomName(), Log.DEFAULT);
 						return ServerMessage.createAcceptMessage(us);
 					}
-					else
+					else {
+						log.writeEnter(us.getUser().getEmailId(), false, room.getRoomName(), "full_room");
 						return ServerMessage.createRejectMessage("The room is full");
+					}
+						
 				}
-				
+				log.writeEnter(us.getUser().getEmailId(), false, room.getRoomName(), "wrong_room_password");
 				return ServerMessage.createRejectMessage("Wrong room password");					
 				
 				
@@ -149,11 +169,14 @@ public class ClientHandler extends Thread{
 			try {
 				UserStatus us = status.getUserStatus(clientMessage.getIdUser());
 				
-				if(!us.isInside())
+				if(!us.isInside()) {
+					log.writeExit(us.getUser().getEmailId(), false, Log.DEFAULT, "user_already_out");
 					return ServerMessage.createRejectMessage("The user is already out");
-				
+					
+				}
+					
+				log.writeExit(us.getUser().getEmailId(), true, us.getCurrentRoom().getRoomName(), Log.DEFAULT);
 				us.exitRoom();
-				
 				return ServerMessage.createAcceptMessage(us);
 				
 			} catch (UserNotFoundException e) {
@@ -166,11 +189,14 @@ public class ClientHandler extends Thread{
 			try {
 				UserStatus us = status.getUserStatus(clientMessage.getIdUser());
 				
-				if(!us.isLogged())
+				if(!us.isLogged()) {
+					log.writeLogout(us.getUser().getEmailId(), false, "user_not_logged");
 					return ServerMessage.createRejectMessage("The user is not logged");
+				}
+					
 				
 				us.logout();
-				
+				log.writeLogout(us.getUser().getEmailId(), true, Log.DEFAULT);
 				return ServerMessage.createAcceptMessage(us);
 				
 			} catch (UserNotFoundException e) {
