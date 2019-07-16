@@ -141,7 +141,7 @@ public class Admin{
 				
 				try {
 					User u = status.getUserStatus(idUser).getUser();
-					ShowView.showUser(u, status.permittedRooms(u));
+					ShowView.showUser(u, status.permitted(u));
 					
 				} catch (UserNotFoundException e) {
 					BasicView.cantCompleteOperation("The selected user is not found");
@@ -154,7 +154,7 @@ public class Admin{
 				
 				try {
 					Room r = status.getRoom(idRoom);
-					ShowView.showRoom(r, status.permittedUsers(r));
+					ShowView.showRoom(r, status.permitted(r));
 					
 				} catch (RoomNotFoundException e) {
 					BasicView.cantCompleteOperation("The selected room is not found");

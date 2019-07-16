@@ -3,7 +3,6 @@ package view;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import basic.Room;
 import basic.RoomCount;
 import basic.User;
 import status.SynchStatus;

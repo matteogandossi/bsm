@@ -103,7 +103,7 @@ public class Status {
 		Model.deleteUser(userId);
 	}
 	
-	public ArrayList<Room> permittedRooms(User u) {
+	public ArrayList<Room> permitted(User u) {
 		
 		ArrayList<String> idrooms =  permissionList.getAccessableRooms(u);
 		ArrayList<Room> allRooms = new ArrayList<Room>();
@@ -183,7 +183,7 @@ public class Status {
 		
 	}
 	
-	public ArrayList<User> permittedUsers(Room r) {
+	public ArrayList<User> permitted(Room r) {
 		
 		ArrayList<String> idUsers =  permissionList.getAllowedUsers(r);
 		ArrayList<User> allUsers = new ArrayList<User>();
